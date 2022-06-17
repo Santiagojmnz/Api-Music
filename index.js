@@ -7,4 +7,4 @@ mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('DB conectada'))
     .catch(error => console.log(error))
 
-app.listen(process.env.PORT || 8080)
+app.listen(process.env.PORT || 8000)
