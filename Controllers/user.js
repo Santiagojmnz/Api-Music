@@ -26,7 +26,34 @@ function addUsser(req, res) {
         res.status(500).send({ message: "Información incompleta" })
 
     }
+};
+
+function findUser(req, res){ 
+    User.find()
+    .then(user  => {
+        if(user) {
+            res.json(user)
+        } else {
+            res.status(500).send({message: 'No se pudieron cargar los usuarios'})
+        }
+    })
+};
+
+function findUserId(req, res){
+    var userId = req.params.id;
+    User.findById(userId)
+    .then(user => {
+        if (user) {
+            res.json(user)
+        } else {
+            res.status(500).send({message: 'No se encontró el usuario'})
+        }
+    })
 }
+
+
 module.exports = {
-    addUsser
+    addUsser, 
+    findUser,
+    findUserId
 }
