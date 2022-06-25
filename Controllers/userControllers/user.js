@@ -1,5 +1,5 @@
 'use strict'
-const User = require('../Models/user');
+const User = require('../../Models/user');
 const bcrypt = require('bcrypt');
 
 function addUsser(req, res) {
