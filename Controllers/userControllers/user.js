@@ -1,15 +1,23 @@
 'use strict'
 const User = require('../../Models/user');
 const bcrypt = require('bcrypt');
+const { uid } = require('uid/secure');
+const { confirmEmail } = require('../../Utils/confirmEmail')
+const { createToken } = require('../../Services/jwt');
 
 function addUsser(req, res) {
     const user = new User(req.body);
+
     const params = req.body;
-    user.role = "user";
+
     if (params.name != null && params.surname != null && params.email != null && params.password != null) {
 
         const hash = bcrypt.hashSync(params.password, 10);
+        const code = uid(25);
+        const email = user.email;
+        user.code = code;
         user.password = hash;
+        const token = createToken({ code, email });
         User.find({ email: user.email })
             .then((emailUser) => {
                 if (emailUser.length) {
@@ -17,8 +25,11 @@ function addUsser(req, res) {
                     return res.status(500).send({ message: 'El email ingresado ya se encuentra en uso: ' + user.email });
 
                 } else {
+
                     user.save();
-                    return res.status(200).send({ message: 'Usuario registrado' })
+                    confirmEmail(user.name, user.surname, user.email, token);
+
+                    return res.status(200).send({ message: 'Usuario registrado - Confirmar cuenta' })
                 }
 
             })

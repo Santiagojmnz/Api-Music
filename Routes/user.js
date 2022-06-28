@@ -9,5 +9,7 @@ api.get('/find-user', userController.findUser);
 api.get('/find-user/:id', userController.findUserId);
 api.put('/update-user/:id', userController.updateUser);
 api.delete('/delete-user/:id', userController.deleteUser);
+api.get('/verify-account/:token', userController.confirmEmail);
+api.post('/login', userController.login);
 
 module.exports = api;
