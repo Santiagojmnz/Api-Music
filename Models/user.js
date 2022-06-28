@@ -25,7 +25,8 @@ const UserSchema = new Schema({
         type: String,
         uppercase: true,
         trim: true,
-        require
+        require: true,
+        default: 'USER'
     },
     image: {
         type: String
@@ -36,7 +37,16 @@ const UserSchema = new Schema({
     },
     expire: {
         type: Date
+    },
+    code: {
+        type: String
+    },
+    status: {
+        type: String,
+        required: true,
+        default: 'UNVERIFIED'
     }
+
 
 })
 UserSchema.methods.toJSON = function() {
