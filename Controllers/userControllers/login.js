@@ -19,7 +19,7 @@ const login = async(req, res) => {
     const checkPassword = await bcrypt.compareSync(password, user.password);
     if (!checkPassword) {
 
-        res.status(500).json({ message: 'Usuario y/o contaseña incorectos' });
+        res.status(500).json({ message: 'Usuario y/o contaseña incorrectos' });
 
 
     } else {
