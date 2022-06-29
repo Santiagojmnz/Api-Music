@@ -14,6 +14,6 @@ api.post('/login', userController.login);
 api.post('/restore-password', userController.resetContrasena);
 api.post('/validate-token', userController.validarToken);
 api.post('/update-password', userController.guardarNuevaContrasena);
-api.get('/change-status/:_id', userController.cambiarStatus);
+api.get('/suspend-account/:_id', userController.suspenderCuenta);
 
 module.exports = api;

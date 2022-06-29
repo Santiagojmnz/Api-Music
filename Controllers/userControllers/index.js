@@ -8,7 +8,7 @@ const {
 
 const { confirmEmail } = require('./confirmEmail')
 const { login } = require('./login');
-const { cambiarStatus } = require("./changeStatus");
+const { suspenderCuenta } = require("./suspenderCuenta");
 const {
     resetContrasena, 
     validarToken, 
@@ -26,5 +26,5 @@ module.exports = {
     resetContrasena,
     validarToken,
     guardarNuevaContrasena,
-    cambiarStatus
+    suspenderCuenta
 }
