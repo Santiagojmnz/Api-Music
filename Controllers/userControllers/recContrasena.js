@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-var bcrypt2 = require('bcrypt-nodejs');
 const Usuario = require('../../Models/user');
 const { passwordEmail } = require('../../Utils/recContrasena');
 
@@ -105,8 +104,7 @@ exports.guardarNuevaContrasena = async(request, response, next) => {
         }
 
         // cifra la contraseña y la introduce en los datos del usuario
-        bcrypt2.hash(request.body.password, null, null, function(err, hash) {
-
+        bcrypt.hash(request.body.password, 10, function(err, hash) {
             usuario.password = hash;
 
             // quita el token de recuperación
@@ -115,7 +113,7 @@ exports.guardarNuevaContrasena = async(request, response, next) => {
 
             // guardamos cambios
             usuario.save();
-        })
+        });
 
         response.json({ message: 'La nueva contraseña ha sido guardada.' });
 
