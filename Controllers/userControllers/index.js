@@ -8,6 +8,13 @@ const {
 
 const { confirmEmail } = require('./confirmEmail')
 const { login } = require('./login');
+const { suspenderCuenta } = require("./suspenderCuenta");
+const {
+    resetContrasena, 
+    validarToken, 
+    guardarNuevaContrasena
+} = require("./recContrasena");
+
 module.exports = {
     addUsser,
     findUser,
@@ -15,5 +22,9 @@ module.exports = {
     updateUser,
     deleteUser,
     confirmEmail,
-    login
+    login,
+    resetContrasena,
+    validarToken,
+    guardarNuevaContrasena,
+    suspenderCuenta
 }

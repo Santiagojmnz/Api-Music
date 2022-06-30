@@ -12,7 +12,7 @@ const login = async(req, res) => {
 
     }
 
-    if (user.status != 'VERIFIED') {
+    if (user.status !== 'VERIFIED') {
         return res.status(400).json({ message: 'Cuenta no verificada, Accede a tu correo electrónico para verificar la cuenta' });
     }
 
@@ -23,7 +23,13 @@ const login = async(req, res) => {
 
 
     } else {
-        const token = await createToken(user.id)
+        const token = await createToken(user.id);
+
+        //Activacion de la cuenta en caso de estar suspendida
+        if(user.active === false){
+            user.active = true;
+        }
+        
         res.status(200).send({ user, token })
     }
 
