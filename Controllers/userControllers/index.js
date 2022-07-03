@@ -15,6 +15,14 @@ const {
     guardarNuevaContrasena
 } = require("./recContrasena");
 
+const {
+    googleSignin
+} = require("./loginGoogle");
+
+const {
+    changePassword
+} = require("./changePassword");
+
 module.exports = {
     addUsser,
     findUser,
@@ -26,5 +34,7 @@ module.exports = {
     resetContrasena,
     validarToken,
     guardarNuevaContrasena,
-    suspenderCuenta
+    suspenderCuenta,
+    googleSignin,
+    changePassword
 }
