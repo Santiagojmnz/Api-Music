@@ -6,39 +6,42 @@ const { createToken } = require('../../Services/jwt');
 //const { createToken } = require('../../Services/jwt');
 
 const googleSignin = async(req, res = response) => {
-    
-    const {id_token} = req.body;
-    if(id_token){
-        const {email, name, img} = await googleVerify( id_token );
-        
-        
-        let user = await User.findOne({email});
+    const { id_token } = req.body;
+    try {
 
-        if ( !user ) {
-            //Se deb de crear
-            const data ={
-                name,
+        const { given_name, family_name, picture, email } = await googleVerify(id_token);
+
+
+
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            const data = {
+                name: given_name,
+                surname: family_name,
                 email,
-                password:'',
-                img,
-                google: true
+                image: picture,
+                status: 'VERIFIED'
             };
             user = new User(data);
             await user.save()
         }
-        
+
         //Generar el token
         const token = await createToken(user.id);
-        res.json({
+        res.status(200).send({
             user,
             token
         });
 
-    }else{
-        res.status().send({msg:'todo mal'})
+
+    } catch (error) {
+        res.status(500).send({ message: 'Error al procesa la peticion ' + error })
     }
-       
-  
+
+
+
+
 }
 
 module.exports = {

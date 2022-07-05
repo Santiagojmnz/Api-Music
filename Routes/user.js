@@ -4,7 +4,7 @@ const api = express.Router();
 const userController = require('../Controllers/userControllers/index');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { googleSignin } =require('../Controllers/userControllers/loginGoogle');
+
 
 
 
@@ -24,6 +24,6 @@ api.post('/update-password/:id', userController.changePassword);
 api.post('/google', [
     check('id_token', 'El id_token es necesario').not().isEmpty(),
     validarCampos
-], googleSignin);
+], userController.googleSignin);
 
 module.exports = api;
