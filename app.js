@@ -10,6 +10,8 @@ var user = require('./Routes/user')
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(express.static('public'));
 //CORS cabecera
 
 app.use(cors());
