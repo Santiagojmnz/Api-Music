@@ -1,6 +1,5 @@
 'use strict'
 const Album = require('../../Models/album');
-const Artist = require('../../Models/artist');
 
 function findAlbum(req, res) {
     try{
@@ -37,7 +36,7 @@ function albumPaginate(req, res) {
                 if (album) {
                     res.json(album)
                 } else {
-                    res.status(500).send({ message: 'No se pudieron cargar los álbum' })
+                    res.status(500).send({ message: 'No se pudieron cargar los álbums' })
                 }
             })
     }catch (error) {

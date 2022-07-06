@@ -11,6 +11,6 @@ api.put('/update-artist/:id', artistController.updateArtist);
 api.delete('/delete-artist/:id', artistController.deleteArtist);
 api.get('/find-artist', artistController.findArtist);
 api.get('/find-artist/:id', artistController.findArtistId);
-api.get('/artist', artistController.artistPaginate);
+api.get('/artists/:page', artistController.artistPaginate);
 
 module.exports = api;

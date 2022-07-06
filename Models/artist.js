@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+
+const mongoosePaginate = require('mongoose-paginate-v2');
 const ArtistSchema = new Schema({
     name: {
         type: String,
@@ -20,4 +22,5 @@ const ArtistSchema = new Schema({
 
 
 });
+ArtistSchema.plugin(mongoosePaginate);
 module.exports = model('Artist', ArtistSchema)
