@@ -20,6 +20,7 @@ function findArtist(req, res) {
 };
 
 function artistPaginate(req, res) {
+    const {page} =req.params;
     try{
         const myCustomLabels = {
             limit: 'false',
@@ -30,7 +31,7 @@ function artistPaginate(req, res) {
             nextPage: 'false',
           };
           const options = {
-            page: req.query.page || 1,
+            page: page || 1,
             customLabels: myCustomLabels,
           };
         Artist.paginate({}, options)

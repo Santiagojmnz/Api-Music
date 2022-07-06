@@ -17,6 +17,7 @@ function findAlbum(req, res) {
   
 };
 function albumPaginate(req, res) {
+    const {page} = req.params;
     try{
         const myCustomLabels = {
             limit: 'false',
@@ -27,7 +28,7 @@ function albumPaginate(req, res) {
             nextPage: 'false',
           };
           const options = {
-            page: req.query.page || 1,
+            page: page || 1,
             customLabels: myCustomLabels,
             populate: 'artist',
           };
