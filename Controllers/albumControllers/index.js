@@ -1,9 +1,10 @@
 const { albumRegister } = require('./register');
 
-const {findAlbum, findAlbumId} = require('./findAlbum');
+const {findAlbum, findAlbumId, albumPaginate} = require('./findAlbum');
 
 module.exports = {
     albumRegister,
     findAlbum,
-    findAlbumId
+    findAlbumId,
+    albumPaginate
 }

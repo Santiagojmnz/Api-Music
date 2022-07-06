@@ -1,9 +1,10 @@
 const { artistRegister } = require('./register');
 
-const { findArtist, findArtistId } = require('./findArtist');
+const { findArtist, findArtistId, artistPaginate } = require('./findArtist');
 
 module.exports = {
     artistRegister,
     findArtist,
-    findArtistId
+    findArtistId,
+    artistPaginate
 }
