@@ -2,7 +2,7 @@ const { albumRegister } = require('./register');
 const {
     updateAlbum,
     deleteAlbum
-} = require("./update&Delete");
+} = require("./updateAndDelete");
 
 module.exports = {
     albumRegister,

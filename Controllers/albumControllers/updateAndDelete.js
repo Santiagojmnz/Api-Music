@@ -13,21 +13,19 @@ function updateAlbum(req, res) {
                     }
     
                     Album.findByIdAndUpdate({ _id: req.params.id }, params)
-                        .then((user) => {
-                            if (user) {
+                        .then((album) => {
+                            if (album) {
                                 return res.status(200).send({ message: 'Album actualizado' });
                             } else {
                                 return res.status(500).send({ message: 'Album no encontrado' });
                             }
     
-                        }).catch((err) => {
-                            return res.status(500).send({ message: 'Error al procesar la peticion' });
-                        });
+                        })
     
                 })
     
         } else {
-            res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' });
+            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' });
         }
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la peticion ' + error });
@@ -40,14 +38,11 @@ function deleteAlbum(req, res) {
         Album.findByIdAndDelete(req.params.id)
         .then((album) => {
             if (album) {
-                res.status(200).send({ message: 'Album eliminado' });
+                return res.status(200).send({ message: 'Album eliminado' });
             } else {
-                res.status(500).send({ message: 'Problemas al eliminar el album' });
+                return res.status(500).send({ message: 'Problemas al eliminar el album' });
             }
-        }).catch((err) => {
-            res.status(500).send({ message: 'Album no encontrado' });
-
-        });
+        })
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la peticion ' + error });
     }
