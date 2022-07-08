@@ -15,12 +15,6 @@ const AlbumSchema = new Schema({
     },
     year: {
         type: Number,
-        validate: {
-            validator: function(v) {
-                return /\d{3}-\d{3}-\d{4}/.test(v);
-            },
-            message: props => `${props.value} is not a valid phone number!`
-        },
         require
     },
     image: {
@@ -28,7 +22,7 @@ const AlbumSchema = new Schema({
     },
     artist: {
         type: Schema.ObjectId,
-        ref: 'Artist'
+        ref: 'artist'
     }
 
 });
