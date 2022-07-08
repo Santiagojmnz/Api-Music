@@ -8,6 +8,7 @@ const UserSchema = new Schema({
     },
     surname: {
         type: String,
+        trim: true,
         require
     },
     email: {
