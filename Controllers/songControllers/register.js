@@ -4,8 +4,9 @@ const getMP3Duration = require('get-mp3-duration')
 const fs = require('fs');
 
 const songRegister = async(req, res) => {
+    const param = req.files.file;
     const binder = 'songs';
-    const validExtensions = ['mp3', 'm4a', 'mpeg']
+    const validExtensions = ['mp32', 'm4a', 'mpeg']
     const params = req.body;
     try {
         if (params.number != null && params.name != null, params.album != null) {
@@ -17,7 +18,7 @@ const songRegister = async(req, res) => {
                 return res.status(500).send({ message: 'La cancion ya se encuentra registrada: ' + song.name });
 
             } else {
-                const name = await fileUpload(req.files, validExtensions, binder);
+                const name = await fileUpload(req.files, validExtensions, binder, param);
                 const buffer = await fs.readFileSync('Uploads/songs/' + name);
                 const duration = getMP3Duration(buffer);
                 const minutes = (duration / (1000 * 60)).toFixed(1);
