@@ -20,6 +20,7 @@
         "get-mp3-duration": "^1.0.0",
         "google-auth-library": "^8.1.0",
         "jsonwebtoken": "^8.5.1",
+        "mediaserver": "^0.1.1",
         "moment": "^2.29.4",
         "mongoose": "^6.4.0",
         "mongoose-paginate-v2": "^1.7.0",
