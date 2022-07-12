@@ -5,7 +5,7 @@ const Album = require('../Models/album');
 const SongSchema = new Schema({
     number: {
         type: Number,
-        requestAnimationFrame
+        require
     },
     name: {
         type: String,
@@ -28,5 +28,5 @@ const SongSchema = new Schema({
         require
     },
 })
-AlbumSchema.plugin(mongoosePaginate);
+SongSchema.plugin(paginate);
 module.exports = model('Song', SongSchema);
