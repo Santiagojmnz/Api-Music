@@ -1,6 +1,8 @@
 'use strict'
 const Artist = require('../../Models/artist');
 const Album = require('../../Models/album');
+const Song = require('../../Models/song');
+const fs = require('fs')
 
 function updateArtist(req, res) {
     const params = req.body;
@@ -31,15 +33,31 @@ function deleteArtist(req, res) {
             .then((artist) => {
 
                 if (artist) {
-                    Album.deleteMany({ artist: req.params.id })
-                        .then((deltedAs) => {
-                            if (deltedAs) {
-                                return res.status(200).send({ message: 'Artista eliminado' });
-                            } else {
-                                return res.status(500).send({ message: 'Problemas al eliminar al artista' });
-                            }
+
+                    Album.find({ artist: req.params.id })
+                        .then((albums) => {
+                            albums.forEach((album) => {
+                                Song.find({album: album._id})
+                                .then((songs) => {
+                                    songs.forEach((delsong) => {
+                                        fs.unlinkSync('Uploads/songs/' + delsong.file)
+                                        
+                                    })
+                                    Song.deleteMany({ album: album._id })
+                                    .then((deletedSongs) => {
+                                    })
+                                })
+
+                            })
+                            Album.deleteMany({ artist: req.params.id })
+                                .then((deletedAs) => {
+                                    if (deletedAs) {
+                                        return res.status(200).send({ message: 'Artista eliminado' });
+                                    } else {
+                                        return res.status(500).send({ message: 'Problemas al eliminar al artista' });
+                                    }
+                            })
                         })
-                    // return res.status(200).send({ message: 'Artista eliminado' });
 
                 } else {
                     return res.status(500).send({ message: 'Artista no encontrado' });
