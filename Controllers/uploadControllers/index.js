@@ -4,13 +4,14 @@ const User = require('../../Models/user');
 
 
 const uploadImage = async(req, res) => {
-    const validCollection = ['albums', 'artists', 'users']
+    const validCollection = ['albums', 'artists', 'users'];
+    const validExtensions = ['jpg', 'png', 'jpeg'];
+
     const { id, collection } = req.params;
 
     try {
         const included = validCollection.includes(collection);
         if (included) {
-            res.status(200).send({ message: `Coleccion valida ${included}` });
 
 
         } else {
