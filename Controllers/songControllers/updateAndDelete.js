@@ -7,7 +7,7 @@ function updateSong(req, res) {
     try {
         if (params.name != null && params.name != '') {
 
-            Song.find({_id: {$ne: req.params.id}, name: params.name, album: params.album })
+            Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
                 .then((exists) => {
                     if (exists.length) {
                         return res.status(500).send({ message: 'Esa canción ya existe' });
@@ -39,7 +39,7 @@ function deleteSong(req, res) {
         Song.findOne({ _id: req.params.id })
             .then((song) => {
                 if (song) {
-                    fs.unlink('Uploads/songs/' + song.file)
+                    fs.unlink('Songs/' + song.file)
                         .then(() => {
                             Song.findByIdAndDelete(req.params.id)
                                 .then(() => {
