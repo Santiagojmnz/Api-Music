@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
-
 const Artist = require('../Models/artist');
 
 const AlbumSchema = new Schema({

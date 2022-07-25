@@ -9,8 +9,9 @@ var user = require('./Routes/user');
 var artist = require('./Routes/artist');
 var album = require('./Routes/album');
 var song = require('./Routes/song');
-var uploadImage = require('./Routes/uploadImage');
-
+var image = require('./Routes/image');
+var playList = require('./Routes/playList');
+var addSong = require('./Routes/listSong');
 //Servidor
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,7 +31,7 @@ app.use(cors());
 app.options('*', cors());
 
 //Rutas base
-app.use('/api', user, artist, album, song, uploadImage);
+app.use('/api', user, artist, album, song, image, playList, addSong);
 
 
 module.exports = app;

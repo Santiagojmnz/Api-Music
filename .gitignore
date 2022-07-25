@@ -1,3 +1,5 @@
 /node_modules
+/Songs
+/Images
 package-lock.json
 config.js
