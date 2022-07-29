@@ -5,9 +5,8 @@ const { uid } = require('uid/secure');
 const { confirmEmail } = require('../../Utils/confirmEmail')
 const { createToken } = require('../../Services/jwt');
 
-function addUsser(req, res) {
+function addUser(req, res) {
     const user = new User(req.body);
-
     const params = req.body;
 
     if (params.name != null && params.surname != null && params.email != null && params.password != null) {
@@ -113,7 +112,7 @@ function deleteUser(req, res) {
 
 
 module.exports = {
-    addUsser,
+    addUser,
     findUser,
     findUserId,
     updateUser,

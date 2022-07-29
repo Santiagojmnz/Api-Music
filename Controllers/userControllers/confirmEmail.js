@@ -5,7 +5,6 @@ const confirmEmail = async(req, res) => {
     const { token } = req.params;
     const data = await tokenData(token);
     const { code, email } = data.data;
-    console.log(code, email);
 
     User.findOne({ email })
 

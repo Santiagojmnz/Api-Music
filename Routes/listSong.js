@@ -1,7 +1,9 @@
 const express = require('express');
 const api = express.Router();
 const { addSong } = require('../Controllers/listSongControllers');
-api.post('/add-song', addSong);
+const { ensureAuth } = require('../Middlewares/authenticated');
+
+api.post('/add-song', ensureAuth, addSong);
 
 
 
