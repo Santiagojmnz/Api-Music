@@ -1,5 +1,5 @@
 const {
-    addUsser,
+    addUser,
     findUser,
     findUserId,
     updateUser,
@@ -10,8 +10,8 @@ const { confirmEmail } = require('./confirmEmail')
 const { login } = require('./login');
 const { suspenderCuenta } = require("./suspenderCuenta");
 const {
-    resetContrasena, 
-    validarToken, 
+    resetContrasena,
+    validarToken,
     guardarNuevaContrasena
 } = require("./recContrasena");
 
@@ -24,7 +24,7 @@ const {
 } = require("./changePassword");
 
 module.exports = {
-    addUsser,
+    addUser,
     findUser,
     findUserId,
     updateUser,
