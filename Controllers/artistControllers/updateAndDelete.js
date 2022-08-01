@@ -5,8 +5,8 @@ const Song = require('../../Models/song');
 const fs = require('fs')
 
 function updateArtist(req, res) {
-    const params = req.body;
     try {
+    const params = req.body;
         if (params.name != null && params.name != '' && params.description != null && params.description != '') {
 
             Artist.findByIdAndUpdate({ _id: req.params.id }, params)
@@ -40,7 +40,7 @@ function deleteArtist(req, res) {
                                 Song.find({album: album._id})
                                 .then((songs) => {
                                     songs.forEach((delsong) => {
-                                        fs.unlinkSync('Uploads/songs/' + delsong.file)
+                                        fs.unlinkSync('Songs/' + delsong.file)
                                         
                                     })
                                     Song.deleteMany({ album: album._id })

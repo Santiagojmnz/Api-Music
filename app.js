@@ -31,7 +31,7 @@ app.use(cors());
 app.options('*', cors());
 
 //Rutas base
-app.use('/api', user, artist, album, song, image, playList, addSong);
+app.use('/api', user, artist, album, song, playList, addSong, image);
 
 
 module.exports = app;

@@ -4,11 +4,11 @@ const getMP3Duration = require('get-mp3-duration')
 const fs = require('fs');
 
 const songRegister = async(req, res) => {
+    try {
     const param = req.files.file;
     const validExtensions = ['mp3', 'm4a', 'mpeg']
     const binder = 'Songs';
     const params = req.body;
-    try {
         if (params.number != null && params.name != null && params.album != null) {
             const song = await new Song(params);
             const songResult = await Song.find({ name: song.name, album: song.album });

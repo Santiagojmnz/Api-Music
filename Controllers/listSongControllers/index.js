@@ -1,5 +1,8 @@
 const { addSong } = require('./register');
 
+const { deleteListSong } = require('./delete');
+
 module.exports = {
-    addSong
+    addSong,
+    deleteListSong
 }
