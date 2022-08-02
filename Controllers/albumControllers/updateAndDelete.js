@@ -4,8 +4,8 @@ const Song = require('../../Models/song');
 const fs = require('fs')
 
 function updateAlbum(req, res) {
-    const params = req.body;
     try {
+    const params = req.body;
         if (params.title != null && params.title != '' && params.description != null && params.description != '' && params.year != null && params.year != '' && params.artist != null && params.artist != '') {
 
             Album.find({ title: params.title, artist: req.params.artist })
@@ -44,7 +44,7 @@ function deleteAlbum(req, res) {
                     Song.find({album: req.params.id})
                     .then((songs) => {
                         songs.forEach((delsong) => {
-                            fs.unlinkSync('Uploads/songs/' + delsong.file)
+                            fs.unlinkSync('Songs/' + delsong.file)
                         })
                     })
                     Song.deleteMany({ album: req.params.id })

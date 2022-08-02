@@ -1,5 +1,9 @@
 const { playListRegister } = require('./register');
 
+const { deletePlayList, updatePList} = require('./updateAndDelete');
+
 module.exports = {
-    playListRegister
+    playListRegister,
+    updatePList,
+    deletePlayList
 }
