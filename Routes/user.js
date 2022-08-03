@@ -10,8 +10,8 @@ const { isAdmin } = require('../Middlewares/isAdmin');
 
 
 api.post('/new-user', userController.addUser);
-api.get('/find-user', ensureAuth, isAdmin, userController.findUser);
-api.get('/find-user/:id', ensureAuth, userController.findUserId);
+api.get('/user', ensureAuth, isAdmin, userController.findUser);
+api.get('/user/:id', ensureAuth, userController.findUserId);
 api.put('/update-user/:id', ensureAuth, userController.updateUser);
 api.delete('/delete-user/:id', ensureAuth, isAdmin, userController.deleteUser);
 api.get('/verify-account/:token', userController.confirmEmail);

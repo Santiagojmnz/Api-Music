@@ -6,8 +6,8 @@ const { isAdmin } = require('../Middlewares/isAdmin');
 api.post('/new-album', ensureAuth, isAdmin, albumController.albumRegister);
 api.put('/update-album/:id', ensureAuth, isAdmin, albumController.updateAlbum);
 api.delete('/delete-album/:id', ensureAuth, isAdmin, albumController.deleteAlbum);
-api.get('/find-album', ensureAuth, albumController.findAlbum);
-api.get('/find-album/:id', ensureAuth, albumController.findAlbumId);
+api.get('/album', ensureAuth, albumController.findAlbum);
+api.get('/album/:id', ensureAuth, albumController.findAlbumId);
 api.get('/albums/:page', ensureAuth, albumController.albumPaginate);
 
 

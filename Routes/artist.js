@@ -6,8 +6,8 @@ const { isAdmin } = require('../Middlewares/isAdmin');
 api.post('/new-artist', ensureAuth, isAdmin, artistController.artistRegister);
 api.put('/update-artist/:id', ensureAuth, isAdmin, artistController.updateArtist);
 api.delete('/delete-artist/:id', ensureAuth, isAdmin, artistController.deleteArtist);
-api.get('/find-artist', ensureAuth, artistController.findArtist);
-api.get('/find-artist/:id', ensureAuth, artistController.findArtistId);
+api.get('/artist', ensureAuth, artistController.findArtist);
+api.get('/artist/:id', ensureAuth, artistController.findArtistId);
 api.get('/artists/:page', ensureAuth, artistController.artistPaginate);
 
 module.exports = api;
