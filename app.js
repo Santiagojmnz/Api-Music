@@ -12,6 +12,7 @@ var song = require('./Routes/song');
 var image = require('./Routes/image');
 var playList = require('./Routes/playList');
 var addSong = require('./Routes/listSong');
+var search = require('./Routes/search');
 //Servidor
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,7 +32,7 @@ app.use(cors());
 app.options('*', cors());
 
 //Rutas base
-app.use('/api', user, artist, album, song, playList, addSong, image);
+app.use('/api', user, artist, album, song, playList, addSong, image, search);
 
 
 module.exports = app;
