@@ -10,11 +10,11 @@ function findSong(req, res) {
                 if (song) {
                     res.json(song)
                 } else {
-                    res.status(500).send({ message: 'No se pudo cargar las Canciones' })
+                    res.status(500).send({ message: 'No se pudo cargar las canciones' })
                 }
             })
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
 
 };
@@ -33,7 +33,7 @@ function findSongId(req, res) {
             })
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
 
 };
@@ -63,7 +63,7 @@ function songsPaginate(req, res) {
                 }
             })
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
 
 };

@@ -8,7 +8,7 @@ function updatePList(req, res) {
 
             const exists = PlayList.find({ _id: { $ne: req.params.id }, name: params.name, user: params.user })
             if (exists.length) {
-                return res.status(500).send({ message: 'Esa lista de reproducción ya existe' });
+                return res.status(500).send({ message: 'Lista de reproducción existente' });
             }
 
             PlayList.findByIdAndUpdate({ _id: req.params.id }, params)
@@ -16,12 +16,12 @@ function updatePList(req, res) {
                     if (listUpdated) {
                         return res.status(200).send({ message: 'Lista de reproducción actualizada' });
                     } else {
-                        return res.status(500).send({ message: 'Lista de reproducción no encontrada' });
+                        return res.status(404).send({ message: 'Lista de reproducción no encontrada' });
                     }
                 })
 
         } else {
-            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' });
+            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' });
         }
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición ' + error });
@@ -45,7 +45,7 @@ function deletePlayList(req, res) {
                             return res.status(200).send({ message: 'Lista de reproducción eliminada' });
                         })
                 } else {
-                    return res.status(500).send({ message: 'Lista de reproducción no encontrada' });
+                    return res.status(404).send({ message: 'Lista de reproducción no encontrada' });
                 }
             })
     } catch (error) {

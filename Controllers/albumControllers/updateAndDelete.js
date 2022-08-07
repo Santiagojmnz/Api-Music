@@ -11,15 +11,15 @@ function updateAlbum(req, res) {
             Album.find({ title: params.title, artist: req.params.artist })
                 .then((exists) => {
                     if (exists.length) {
-                        return res.status(500).send({ message: 'Estas duplicando un album' });
+                        return res.status(500).send({ message: 'Estas duplicando un álbum' });
                     }
 
                     Album.findByIdAndUpdate({ _id: req.params.id }, params)
                         .then((album) => {
                             if (album) {
-                                return res.status(200).send({ message: 'Album actualizado' });
+                                return res.status(200).send({ message: 'Álbum actualizado' });
                             } else {
-                                return res.status(500).send({ message: 'Album no encontrado' });
+                                return res.status(404).send({ message: 'Álbum no encontrado' });
                             }
 
                         })
@@ -27,10 +27,10 @@ function updateAlbum(req, res) {
                 })
 
         } else {
-            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' });
+            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' });
         }
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 };
 
@@ -50,17 +50,17 @@ function deleteAlbum(req, res) {
                     Song.deleteMany({ album: req.params.id })
                         .then((deltedSg) => {
                             if (deltedSg) {
-                                return res.status(200).send({ message: 'Album eliminado' });
+                                return res.status(200).send({ message: 'Álbum eliminado' });
                             } else {
-                                return res.status(500).send({ message: 'Problemas al eliminar el album' });
+                                return res.status(500).send({ message: 'Problemas al eliminar el álbum' });
                             }
                         })
                 } else {
-                    return res.status(500).send({ message: 'Problemas al eliminar el album' });
+                    return res.status(500).send({ message: 'Álbum no encontrado' });
                 }
             })
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 
 }

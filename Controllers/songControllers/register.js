@@ -15,7 +15,7 @@ const songRegister = async(req, res) => {
 
             if (songResult.length) {
 
-                return res.status(500).send({ message: 'La cancion ya se encuentra registrada: ' + song.name });
+                return res.status(500).send({ message: 'La canción ya se encuentra registrada: ' + song.name });
 
             } else {
                 const name = await fileUpload(req.files, validExtensions, binder);
@@ -26,7 +26,7 @@ const songRegister = async(req, res) => {
                 song.file = name;
                 song.duration = minutes;
                 song.save();
-                return res.status(200).send({ message: 'Cancion registrada' })
+                return res.status(200).send({ message: 'Canción registrada' })
             }
         } else {
             res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })

@@ -15,7 +15,7 @@ exports.isAdmin = (req, res, next) => {
 
 
     } catch (error) {
-        return res.status(500).send({ message: 'Error al procesar la peticion ' + error })
+        return res.status(500).send({ message: 'Error al procesar la petición ' + error })
     }
 
 }

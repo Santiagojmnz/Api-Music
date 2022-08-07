@@ -11,24 +11,24 @@ const changePassword = async(req, res) => {
             const user = await User.findById({ _id: id });
             const comparePass = bcrypt.compareSync(password, user.password)
             if (!comparePass) {
-                res.status(500).send({ message: 'Error al actualizar la contraseña, Contraseña Incorrecta' })
+                res.status(500).send({ message: 'Error al actualizar la contraseña, Contraseña incorrecta' })
             } else {
     
                 if (newPassword == confirmPassword) {
                     const hash = bcrypt.hashSync(newPassword, 10);
                     user.password = hash;
-                    res.status(200).send({ message: 'Contraseña Actualizada' })
+                    res.status(200).send({ message: 'Contraseña actualizada' })
                     user.save();
     
                 } else {
-                    res.status(500).send({ message: 'La confirmacion de contraseña no coincide' })
+                    res.status(500).send({ message: 'La confirmación de contraseña no coincide' })
                 }
             }
         } else{
-            res.status(500).send({message: 'Los campos no pueden quedar vacios'})
+            res.status(500).send({message: 'Los campos no pueden quedar vacíos'})
         }
     } catch (err) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + err })
+        res.status(500).send({ message: 'Error al procesar la petición ' + err })
 }
 }
 

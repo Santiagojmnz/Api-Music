@@ -36,7 +36,7 @@ const googleSignin = async(req, res = response) => {
 
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesa la peticion ' + error })
+        res.status(500).send({ message: 'Error al procesa la petición ' + error })
     }
 
 

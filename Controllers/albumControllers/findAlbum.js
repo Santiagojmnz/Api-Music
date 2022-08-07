@@ -12,7 +12,7 @@ function findAlbum(req, res) {
             }
         })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
   
 };
@@ -37,11 +37,11 @@ function albumPaginate(req, res) {
                 if (album) {
                     res.json(album)
                 } else {
-                    res.status(500).send({ message: 'No se pudieron cargar los álbums' })
+                    res.status(500).send({ message: 'No se pudieron cargar los álbumes' })
                 }
             })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
     
 };
@@ -58,7 +58,7 @@ function findAlbumId(req, res) {
                 }
             })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
     }

@@ -11,7 +11,7 @@ const artistRegister = async(req, res) => {
                 .then((coincidence) => {
 
                     if (coincidence.length) {
-                        return res.status(500).send({ message: 'EL artista ya se encuentra registrado: ' + artist.name });
+                        return res.status(500).send({ message: 'El artista ya se encuentra registrado: ' + artist.name });
                     } else {
                         artist.save();
                         return res.status(200).send({ message: 'Artista registrado' })
@@ -25,7 +25,7 @@ const artistRegister = async(req, res) => {
 
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 
 

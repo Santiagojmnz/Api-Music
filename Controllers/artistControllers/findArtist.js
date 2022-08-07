@@ -13,7 +13,7 @@ function findArtist(req, res) {
             }
         })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
    
@@ -43,7 +43,7 @@ function artistPaginate(req, res) {
                 }
             })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
     
 };
@@ -61,7 +61,7 @@ function findArtistId(req, res) {
                 }
             })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
     

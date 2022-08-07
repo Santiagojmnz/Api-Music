@@ -8,10 +8,10 @@ function deleteListSong(req, res) {
                 if (list) {
                     ListSong.findByIdAndDelete(req.params.id)
                         .then(() => {
-                            return res.status(200).send({ message: 'Canción eliminada' });
+                            return res.status(200).send({ message: 'Canción eliminada de la lista de reproducción' });
                         })
                 } else {
-                    return res.status(500).send({ message: 'Canción no encontrada' });
+                    return res.status(500).send({ message: 'Problemas al eliminar la canción de la lista de reproducción' });
                 }
             })
     } catch (error) {

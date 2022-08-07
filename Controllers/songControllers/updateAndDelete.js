@@ -13,7 +13,7 @@ async function updateSong(req, res) {
 
             const exists = Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
             if (exists.length) {
-                return res.status(500).send({ message: 'Esa canción ya existe' });
+                return res.status(500).send({ message: 'Canción existente' });
             }
 
             if (req.files) {
@@ -42,16 +42,16 @@ async function updateSong(req, res) {
                         if (song) {
                             return res.status(200).send({ message: 'Canción actualizada' });
                         } else {
-                            return res.status(500).send({ message: 'Canción no encontrada' });
+                            return res.status(404).send({ message: 'Canción no encontrada' });
                         }
                     })
             }
 
         } else {
-            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' });
+            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' });
         }
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 };
 
@@ -67,10 +67,10 @@ async function deleteSong(req, res) {
                         })
 
                 } else {
-                    return res.status(500).send({ message: 'Canción no encontrada' });
+                    return res.status(404).send({ message: 'Canción no encontrada' });
                 }
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 
 }

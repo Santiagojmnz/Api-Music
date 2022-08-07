@@ -9,7 +9,7 @@ const fileUpload = (files, validExtensions, binder) => {
         const split = file.name.split('.');
         const extension = split[split.length - 1];
         if (!validExtensions.includes(extension)) {
-            throw new Error(`Extension invalida ${extension}, solo se permiten archivos ${validExtensions}`);
+            throw new Error(`Extensión inválida ${extension}, sólo se permiten archivos ${validExtensions}`);
         }
         const name = uid(16) + '.' + extension;
         const pathFile = path.join(__dirname, `../${binder}`, name);

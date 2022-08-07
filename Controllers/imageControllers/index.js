@@ -52,18 +52,18 @@ const uploadImage = async(req, res) => {
                     album.save();
                     return res.status(200).send({ message: 'Imagen actualizada' });
                 } else {
-                    return res.status(400).send({ message: 'El album no existe' });
+                    return res.status(400).send({ message: 'El álbum no existe' });
                 }
             }
 
         } else {
-            return res.status(400).send({ message: `Coleccion invalida: ${collection}, utiliza: ${validCollection}` });
+            return res.status(400).send({ message: `Colección inválida: ${collection}, utiliza: ${validCollection}` });
 
         }
 
     } catch (error) {
 
-        return res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        return res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
 }
@@ -151,21 +151,21 @@ const getImage = async(req, res) => {
                     const defaultImage = path.join(__dirname, '../../assets/default.jpg')
                     return res.sendFile(defaultImage);
                 } else {
-                    return res.status(400).send({ message: 'El album no existe' })
+                    return res.status(400).send({ message: 'El álbum no existe' })
                 }
 
             }
 
 
         } else {
-            return res.status(400).send({ message: `Coleccion invalida: ${collection}, utiliza: ${validCollection}` });
+            return res.status(400).send({ message: `Colección inválida: ${collection}, utiliza: ${validCollection}` });
 
         }
 
 
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error })
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error })
     }
 
 

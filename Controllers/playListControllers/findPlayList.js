@@ -8,11 +8,11 @@ function findPlayList(req, res) {
             if (playList) {
                 res.json(playList)
             } else {
-                res.status(500).send({ message: 'No se pudieron cargar las Listas de reproducción' })
+                res.status(500).send({ message: 'No se pudieron cargar las listas de reproducción' })
             }
         })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
   
 };
@@ -30,7 +30,7 @@ function findPlayListId(req, res) {
                 }
             })
     }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
     }

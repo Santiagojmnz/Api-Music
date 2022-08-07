@@ -21,7 +21,7 @@ const confirmEmail = async(req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).json({ message: 'Error al procesar la peticion ' + err })
+            res.status(500).json({ message: 'Error al procesar la petición ' + err })
         });
 
 

@@ -8,7 +8,7 @@ const albumRegister = async(req, res) => {
 
         if (params.title != null && params.description != null && params.year != null && params.artist != null) {
             if (isNaN(params.year)) {
-                return res.status(500).send({ message: 'El año ingresado no es valido: ' + params.year })
+                return res.status(500).send({ message: 'El año ingresado no es válido: ' + params.year })
             } else {
                 const album = await new Album(req.body);
 
@@ -16,7 +16,7 @@ const albumRegister = async(req, res) => {
                     .then((coincidence) => {
 
                         if (coincidence.length) {
-                            return res.status(500).send({ message: 'El album ya se encuentra registrado: ' + album.title });
+                            return res.status(500).send({ message: 'El álbum ya se encuentra registrado: ' + album.title });
                         } else {
                             album.save();
                             return res.status(200).send({ message: 'Album registrado' })
@@ -33,7 +33,7 @@ const albumRegister = async(req, res) => {
 
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
 

@@ -62,52 +62,55 @@ function findUserId(req, res) {
 }
 
 function updateUser(req, res) {
-    const params = req.body;
+    try {
+        const params = req.body;
 
-    if (params.name != null && params.surname != null && params.email != null && params.password != null && params.role != null) {
-        const hash = bcrypt.hashSync(params.password, 10);
-        params.password = hash;
-        User.find({ _id: { $ne: req.params.id }, email: params.email })
-            .then((isEmail) => {
-                if (isEmail.length) {
+        if (params.name != "" && params.surname != "" && params.email != "" && params.password != "" && params.role != "" && params.name != null && params.surname != null && params.email != null && params.password != null && params.role != null) {
+            const hash = bcrypt.hashSync(params.password, 10);
+            params.password = hash;
+            User.find({ _id: { $ne: req.params.id }, email: params.email })
+                .then((isEmail) => {
+                    if (isEmail.length) {
 
-                    return res.status(500).send({ message: 'Email ingresado se encuentra en uso' });
+                        return res.status(500).send({ message: 'El email ingresado se encuentra en uso' });
 
-                }
+                    }
 
-                User.findByIdAndUpdate({ _id: req.params.id }, params)
-                    .then((user) => {
-                        if (user) {
-                            return res.status(200).send({ message: 'Usuario actualizado' });
-                        } else {
-                            return res.status(500).send({ message: 'Usuario no encontrado' });
-                        }
+                    User.findByIdAndUpdate({ _id: req.params.id }, params)
+                        .then((user) => {
+                            if (user) {
+                                return res.status(200).send({ message: 'Usuario actualizado' });
+                            } else {
+                                return res.status(404).send({ message: 'Usuario no encontrado' });
+                            }
 
-                    }).catch((err) => {
-                        return res.status(500).send({ message: 'Error al procesar la peticion' });
+                        })
 
-                    });
+                })
 
-
-            })
-
-    } else {
-        res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' })
+        } else {
+            res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })
+        }
+    } catch (error) {
+        return res.status(500).send({ message: 'Error al procesar la petición' });
     }
+
 };
 
 function deleteUser(req, res) {
-    User.findByIdAndDelete(req.params.id)
-        .then((user) => {
-            if (user) {
-                res.status(200).send({ message: 'Cuenta eliminada' });
-            } else {
-                res.status(500).send({ message: 'Problemas al eliminar la cuenta' });
-            }
-        }).catch((err) => {
-            res.status(500).send({ message: 'Cuenta no encontrada' });
+    try {
+        User.findByIdAndDelete(req.params.id)
+            .then((user) => {
+                if (user) {
+                    res.status(200).send({ message: 'Cuenta eliminada' });
+                } else {
+                    res.status(404).send({ message: 'Cuenta no encontrada' });
+                }
+            })
+    } catch (err) {
+        res.status(500).send({ message: 'Problemas al eliminar la cuenta' });
 
-        });
+    };
 }
 
 

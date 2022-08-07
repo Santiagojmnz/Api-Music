@@ -14,15 +14,15 @@ function updateArtist(req, res) {
                     if (artist) {
                         return res.status(200).send({ message: 'Artista actualizado' });
                     } else {
-                        return res.status(500).send({ message: 'Artista no encontrado' });
+                        return res.status(404).send({ message: 'Artista no encontrado' });
                     }
                 })
 
         } else {
-            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios faltantes' })
+            return res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })
         }
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 
 };
@@ -60,12 +60,12 @@ function deleteArtist(req, res) {
                         })
 
                 } else {
-                    return res.status(500).send({ message: 'Artista no encontrado' });
+                    return res.status(404).send({ message: 'Artista no encontrado' });
                 }
 
             })
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' });
+        res.status(500).send({ message: 'Error al procesar la petición ' });
     }
 
 }

@@ -18,9 +18,9 @@ async function confirmEmail(nombre, lastname, email, code) {
         mensaje += `para verificar tu cuenta <a href="${config.RUTA}${code}">Haz clic aquí</a><br>`;
 
         let info = await transporter.sendMail({
-            from: `Confirmacion de cuenta<${config.USUARIO_SMTP}>`, // sender address
+            from: `Confirmación de cuenta<${config.USUARIO_SMTP}>`, // sender address
             to: `${nombre}<${email}>`, // list of receivers: Juan Pérez<juan@algo.com>
-            subject: "Confirmacion de cuenta", // Subject line
+            subject: "Confirmación de cuenta", // Subject line
             html: mensaje, // html body
         });
 

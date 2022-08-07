@@ -9,7 +9,7 @@ const addSong = async(req, res) => {
             ListSong.find({ playlist: params.playlist, song: params.song })
                 .then((coincidence) => {
                     if (coincidence.length) {
-                        return res.status(500).send({ message: 'La cancion ya se encuentra listada' })
+                        return res.status(500).send({ message: 'La canción ya se encuentra listada' })
                     } else {
                         toList.save();
                         return res.status(200).send({ messaje: 'Canción listada' });
@@ -22,7 +22,7 @@ const addSong = async(req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la peticion ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición ' + error });
 
     }
 }
