@@ -12,7 +12,7 @@ const playListRegister = async(req, res) => {
                         return res.status(500).send({ message: 'Lista de reproducción existente' })
                     } else {
                         playList.save();
-                        return res.status(200).send({ messaje: 'Lista de reproducción creada' });
+                        return res.status(200).send({ message: 'Lista de reproducción creada' });
                     }
 
                 })

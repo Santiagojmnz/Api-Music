@@ -9,7 +9,7 @@ const songRegister = async(req, res) => {
     const validExtensions = ['mp3', 'm4a', 'mpeg']
     const binder = 'Songs';
     const params = req.body;
-        if (params.number != null && params.name != null && params.album != null) {
+        if (params.number != null && params.name != null && params.album != null && params.number != "" && params.name != "" && params.album != "") {
             const song = await new Song(params);
             const songResult = await Song.find({ name: song.name, album: song.album });
 

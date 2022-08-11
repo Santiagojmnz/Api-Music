@@ -38,7 +38,7 @@ const uploadImage = async(req, res) => {
                 }
             } else {
                 const album = await Album.findByIdAndUpdate(id);
-
+console.log(album)
                 if (album) {
                     if (album.image) {
                         const pathImage = path.join(__dirname, '../../Images/', album.image);
@@ -72,9 +72,8 @@ const uploadImageUser = async(req, res) => {
     const validExtensions = ['jpg', 'png', 'jpeg'];
     const binder = 'Images';
     const name = await fileUpload(req.files, validExtensions, binder);
-    const { id } = req.params.id;
-
-    const user = await User.findByIdAndUpdate(id);
+    const id = req.params.id;
+    const user = await User.findById(id);
     if (user) {
         if (user.image) {
             const pathImage = path.join(__dirname, '../../Images/', user.image);

@@ -6,10 +6,10 @@ const getMP3Duration = require('get-mp3-duration')
 
 async function updateSong(req, res) {
     try {
-    const params = req.body;
-    const binder = 'Songs';
-    const validExtensions = ['mp3', 'm4a', 'mpeg'];
-        if (params.name != null && params.name != '') {
+        const params = req.body;
+        const binder = 'Songs';
+        const validExtensions = ['mp3', 'm4a', 'mpeg'];
+        if (params.name != null && params.name != '' && params.number != null && params.number != '' && params.album != null && params.album != '') {
 
             const exists = Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
             if (exists.length) {
@@ -58,17 +58,17 @@ async function updateSong(req, res) {
 async function deleteSong(req, res) {
 
     try {
-        const song = Song.findOne({ _id: req.params.id })
-                if (song) {
-                    fs.unlink('Songs/' + song.file);
-                    Song.findByIdAndDelete(req.params.id)
-                        .then(() => {
-                            return res.status(200).send({ message: 'Canción eliminada' });
-                        })
+        const song = await Song.findOne({ _id: req.params.id });
+        if (song) {
+            fs.unlinkSync('Songs/' + song.file);
+            Song.findByIdAndDelete(req.params.id)
+                .then(() => {
+                    return res.status(200).send({ message: 'Canción eliminada' });
+                })
 
-                } else {
-                    return res.status(404).send({ message: 'Canción no encontrada' });
-                }
+        } else {
+            return res.status(404).send({ message: 'Canción no encontrada' });
+        }
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
