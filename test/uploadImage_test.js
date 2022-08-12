@@ -43,7 +43,7 @@ describe("Pruebas a uploadImage", () => {
             .attach('file', "/Users/JOSEFRANCO/Downloads/Encore.jpg")
             .end(
                 function(err, res){
-                    expect(res).to.have.status(400);
+                    expect(res).to.have.status(404);
                     expect(res.body).to.have.property('message').to.be.equal('El álbum no existe');
                     done();
                 }
@@ -87,7 +87,7 @@ describe("Pruebas a uploadImage", () => {
             .attach('file', "/Users/JOSEFRANCO/Downloads/Anotando.png")
             .end(
                 function(err, res){
-                    expect(res).to.have.status(400);
+                    expect(res).to.have.status(404);
                     expect(res.body).to.have.property('message').to.be.equal('El usuario no existe');
                     done();
                 }
@@ -125,7 +125,7 @@ describe("Pruebas a uploadImage", () => {
             .set('Authorization', `${Authorization}`)
             .end(
                 function(err, res){
-                    expect(res).to.have.status(400);
+                    expect(res).to.have.status(404);
                     expect(res.body).to.have.property('message').to.be.equal('El álbum no existe');
                     done();
                 }

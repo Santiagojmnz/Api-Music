@@ -153,7 +153,6 @@ describe("Pruebas a Playlist", () => {
             .end(
                 function(err, res){
                     expect(res).to.have.status(200);
-                    // expect(res.body).to.have.property('message');
                     done();
                 }
             )
@@ -200,7 +199,7 @@ describe("Pruebas a Playlist", () => {
             .set('Authorization', `${Authorization}`)
             .end(
                 function(err, res){
-                    expect(res).to.have.status(500);
+                    expect(res).to.have.status(404);
                     expect(res.body).to.have.property('message').to.be.equal('No se encontró la lista de reproducción');
                     done();
                 }

@@ -34,11 +34,10 @@ const uploadImage = async(req, res) => {
                     artist.save();
                     return res.status(200).send({ message: 'Imagen actualizada' });
                 } else {
-                    return res.status(400).send({ message: 'El artista no existe' });
+                    return res.status(404).send({ message: 'El artista no existe' });
                 }
             } else {
                 const album = await Album.findByIdAndUpdate(id);
-console.log(album)
                 if (album) {
                     if (album.image) {
                         const pathImage = path.join(__dirname, '../../Images/', album.image);
@@ -52,7 +51,7 @@ console.log(album)
                     album.save();
                     return res.status(200).send({ message: 'Imagen actualizada' });
                 } else {
-                    return res.status(400).send({ message: 'El álbum no existe' });
+                    return res.status(404).send({ message: 'El álbum no existe' });
                 }
             }
 
@@ -86,7 +85,7 @@ const uploadImageUser = async(req, res) => {
         user.save();
         return res.status(200).send({ message: 'Imagen actualizada' });
     } else {
-        return res.status(400).send({ message: 'El usuario no existe' });
+        return res.status(404).send({ message: 'El usuario no existe' });
     }
 
 
@@ -114,7 +113,7 @@ const getImage = async(req, res) => {
                     const defaultImage = path.join(__dirname, '../../assets/defaultUser.jpg')
                     return res.sendFile(defaultImage);
                 } else {
-                    return res.status(400).send({ message: 'El usuario no existe' })
+                    return res.status(404).send({ message: 'El usuario no existe' })
                 }
 
             }
@@ -132,7 +131,7 @@ const getImage = async(req, res) => {
                     const defaultImage = path.join(__dirname, '../../assets/default.jpg')
                     return res.sendFile(defaultImage);
                 } else {
-                    return res.status(400).send({ message: 'El artista no existe' })
+                    return res.status(404).send({ message: 'El artista no existe' })
                 }
 
             }
@@ -150,7 +149,7 @@ const getImage = async(req, res) => {
                     const defaultImage = path.join(__dirname, '../../assets/default.jpg')
                     return res.sendFile(defaultImage);
                 } else {
-                    return res.status(400).send({ message: 'El álbum no existe' })
+                    return res.status(404).send({ message: 'El álbum no existe' })
                 }
 
             }
