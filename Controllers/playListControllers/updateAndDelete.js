@@ -8,7 +8,7 @@ function updatePList(req, res) {
 
             const exists = PlayList.find({ _id: { $ne: req.params.id }, name: params.name, user: params.user })
             if (exists.length) {
-                return res.status(500).send({ message: 'Lista de reproducción existente' });
+                return res.status(400).send({ message: 'Lista de reproducción existente' });
             }
 
             PlayList.findByIdAndUpdate({ _id: req.params.id }, params)

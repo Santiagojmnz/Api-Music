@@ -1,5 +1,5 @@
 let assert = require('assert');
-const calc = require("../samples/Calc");
+const calc = require("../samples/calc_Luis");
 
 describe("Calculadora", () => {
     before(() => { console.log("Probando funciones de calculadora"); })

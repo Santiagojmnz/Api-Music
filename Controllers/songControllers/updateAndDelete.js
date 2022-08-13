@@ -19,7 +19,13 @@ async function updateSong(req, res) {
             if (req.files) {
                 Song.findById(req.params.id)
                     .then((songName) => {
-                        fs.unlinkSync('Songs/' + songName.file)
+                        if (songName.file) {
+                            const path = path.join(__dirname, '../../Songs/', songName.file);
+                            const exists = await fs.existsSync(path);
+                            if (exists) {
+                                fs.unlinkSync('Songs/' + songName.file)
+                            }
+                        }
                     });
                 const file = req.files.file;
                 const name = await fileUpload(req.files, validExtensions, binder, file);

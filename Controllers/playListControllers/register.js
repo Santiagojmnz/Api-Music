@@ -9,7 +9,7 @@ const playListRegister = async(req, res) => {
             PlayList.find({ user: playList.user, name: playList.name })
                 .then((coincidence) => {
                     if (coincidence.length) {
-                        return res.status(500).send({ message: 'Lista de reproducción existente' })
+                        return res.status(400).send({ message: 'Lista de reproducción existente' })
                     } else {
                         playList.save();
                         return res.status(200).send({ message: 'Lista de reproducción creada' });
