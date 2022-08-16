@@ -56,7 +56,7 @@ function deleteAlbum(req, res) {
                             }
                         })
                 } else {
-                    return res.status(500).send({ message: 'Álbum no encontrado' });
+                    return res.status(404).send({ message: 'Álbum no encontrado' });
                 }
             })
     } catch (error) {

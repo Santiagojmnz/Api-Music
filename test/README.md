@@ -1,0 +1,14 @@
+require('./registerAlbum_test');
+require('./updateAlbum_test');
+require('./getAlbum_test');
+require('./getAlbumId_test');
+require('./getAlbumPage_test');
+require('./deleteAlbum_test');
+require('./registerArtist_test');
+require('./updateArtist_test');
+require('./getArtist_test');
+require('./getArtistId_test');
+require('./getArtistPage_test');
+require('./deleteArtist_test');
+require('./registerListSong_test');
+require('./deleteListSong_test');

@@ -12,7 +12,7 @@ const addSong = async(req, res) => {
                         return res.status(500).send({ message: 'La canción ya se encuentra listada' })
                     } else {
                         toList.save();
-                        return res.status(200).send({ messaje: 'Canción listada' });
+                        return res.status(200).send({ message: 'Canción listada' });
                     }
 
                 })
