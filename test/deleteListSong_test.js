@@ -8,15 +8,16 @@ const url = 'http://localhost:8000/api';
 const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJmNDQ4YmJiN2IzMGJhZDgxZWY4ZTg0IiwiaWF0IjoxNjYwMTc3MjM5LCJleHAiOjE2NjI3NjkyMzl9.ijq3CgduT1b7w8rNQTRwvlNrJ3ZH5s5CNJsT87NYjbU"
 describe('listSong', () => {
 describe('Eliminar canción listada: ',()=>{
-    /*it('Eliminar canción listada con usuario autenticado', (done) => {
+    it('Eliminar canción listada con usuario autenticado', (done) => {
         chai.request(url)
-        .delete('/quit-song/62f5e2fbddbfdf1903a65b90')
+        .delete('/quit-song/62fc323ff046bbdc1e4f802a')
         .set({Authorization: token})
         .end( function(err,res){
-            expect(res).to.have.status(200).to.equal("Canción eliminada de la lista de reproducción");
+            expect(res).to.have.status(200)
+            expect(res.body).to.have.property('message').to.equal("Canción eliminada de la lista de reproducción");
         done();
         });
-        });*/
+        });
     it('Debe rechazar eliminar una canción listada a un usuario no autenticado', (done) => {
     chai.request(url)
     .delete('/quit-song/62f5dbae6b6bfb3948b433e3')

@@ -8,7 +8,7 @@ const url = 'http://localhost:8000/api';
 const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJmNDQ4YmJiN2IzMGJhZDgxZWY4ZTg0IiwiaWF0IjoxNjYwMTc3MjM5LCJleHAiOjE2NjI3NjkyMzl9.ijq3CgduT1b7w8rNQTRwvlNrJ3ZH5s5CNJsT87NYjbU"
 describe('Artista', () => {
 describe('Actualizar artista: ',()=>{
-    /*it('Actualizar artista con usuario no autenticado', (done) => {
+    it('Actualizar artista con usuario no autenticado', (done) => {
         chai.request(url)
         .put('/update-artist/62c4f0e8f83c645a3aa6ff55')
         .set({Authorization: token})
@@ -21,7 +21,7 @@ describe('Actualizar artista: ',()=>{
             expect(res.body).to.have.property('message').to.equal("Artista actualizado");
         done();
         });
-        });*/
+        });
     it('Debe rechazar actualizar artista a usuario no autenticado', (done) => {
     chai.request(url)
     .put('/update-artist/62c4f0e8f83c645a3aa6ff55')
@@ -45,7 +45,7 @@ describe('Actualizar artista: ',()=>{
         })
         .end( function(err,res){
             expect(res).to.have.status(500);
-            expect(res.body).to.have.property('message').to.equal("Por favor ingrese los campos obligatorios (*) faltantes");
+            expect(res.body).to.have.property('message');
         done();
         });
         });

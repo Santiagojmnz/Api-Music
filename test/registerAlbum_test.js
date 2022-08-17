@@ -8,7 +8,7 @@ const url = 'http://localhost:8000/api';
 const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJmNDQ4YmJiN2IzMGJhZDgxZWY4ZTg0IiwiaWF0IjoxNjYwMTc3MjM5LCJleHAiOjE2NjI3NjkyMzl9.ijq3CgduT1b7w8rNQTRwvlNrJ3ZH5s5CNJsT87NYjbU"
 describe('Albums', () => {
    describe('Agregar nuevo álbum: ',()=>{
-    /*it('Agregar álbum con usuario autorizado', (done) => {
+    it('Agregar álbum con usuario autorizado', (done) => {
     chai.request(url)
     .post('/new-album')
     .set({Authorization: token})
@@ -23,7 +23,7 @@ describe('Albums', () => {
         expect(res.body).to.have.property('message').to.equal("Album registrado");
     done();
     });
-    });*/
+    });
     it('Debe rechazar agregar album a usuario no autenticado', (done) => {
     chai.request(url)
     .post('/new-album')

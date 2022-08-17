@@ -1,3 +1,4 @@
+require('./calcLynne_test)
 require('./registerAlbum_test');
 require('./updateAlbum_test');
 require('./getAlbum_test');

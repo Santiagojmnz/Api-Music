@@ -1,5 +1,5 @@
 const assert = require ('assert');
-const calc = require ('../samples/Calc');
+const calc = require ('../samples/CalcLynne');
 
 //vamos a testear con afirmaciones (asserts) por memdio de los hooks:
 //before, after y describe
