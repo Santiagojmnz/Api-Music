@@ -72,7 +72,7 @@ const uploadImageUser = async(req, res) => {
     const validExtensions = ['jpg', 'png', 'jpeg'];
     const binder = 'Images';
     const name = await fileUpload(req.files, validExtensions, binder);
-    const { id } = req.params.id;
+    const id = req.params.id;
 
     const user = await User.findByIdAndUpdate(id);
     if (user) {

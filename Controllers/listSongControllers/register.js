@@ -17,7 +17,7 @@ const addSong = async(req, res) => {
 
                 })
         } else {
-            res.status(500).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })
+            res.status(400).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })
 
         }
 

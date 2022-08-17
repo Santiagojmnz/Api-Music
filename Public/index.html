@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign In</title>
 </head>
+
 <body>
 
     <h1>Google Sign-in</h1>
     <hr>
 
-    <div id="g_id_onload"
-    data-client_id="77243451644-sm86nvr25q3o51eijm3o5m48a0r72fed.apps.googleusercontent.com"
-    data-auto_prompt="false"
-    data-callback="handleCredentialResponse">
+    <div id="g_id_onload" data-client_id="77243451644-sm86nvr25q3o51eijm3o5m48a0r72fed.apps.googleusercontent.com" data-auto_prompt="false" data-callback="handleCredentialResponse">
 
- </div>
- <div class="g_id_signin"
-    data-type="standard"
-    data-size="large"
-    data-theme="outline"
-    data-text="sign_in_with"
-    data-shape="rectangular"
-    data-logo_alignment="left">
- </div>
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+    </div>
 
 
- <button id="google_signout">
+    <button id="google_signout">
     Signout
  </button>
 
@@ -35,44 +28,47 @@
 
     <script>
         function handleCredentialResponse(response) {
-           
+
             //Google Token: Id_token
-           //console.log('id_token', response);
-           
+            //console.log('id_token', response);
 
-           const body = { id_token: response.credential };
-           console.log(body);
 
-           fetch('http://localhost:8000/api/google',{
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(body)
-           })
+            const body = {
+                id_token: response.credential
+            };
+            console.log(body);
 
-           .then( resp => resp.json() )
-           .then( resp => {
-                console.log( resp )
-                localStorage.setItem('email', resp.user.email)
-           })
-           .catch(error =>{
-            console.log(error);
-           });
+            fetch('http://localhost:8000/api/google', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+
+            .then(resp => resp.json())
+                .then(resp => {
+                    console.log(resp)
+                    localStorage.setItem('email', resp.user.email)
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
 
         const button = document.getElementById('google_signout');
-    button.onclick = async() => {
+        button.onclick = async() => {
 
-        console.log(google.accounts.id)
-        google.accounts.id.disableAutoSelect()
-        google.accounts.id.revoke(localStorage.getItem('email'), done => {
-            console.log('consent revoked');
-            localStorage.clear()
-            location.reload()
-        });
-    }
-      </script>
+            console.log(google.accounts.id)
+            google.accounts.id.disableAutoSelect()
+            google.accounts.id.revoke(localStorage.getItem('email'), done => {
+                console.log('consent revoked');
+                localStorage.clear()
+                location.reload()
+            });
+        }
+    </script>
 
 </body>
+
 </html>

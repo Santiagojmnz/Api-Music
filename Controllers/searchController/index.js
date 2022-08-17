@@ -11,26 +11,30 @@ const search = async(req, res) => {
         const artists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
         const albums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
         const songs = await Song.find({ name: regEx });
-
-        if (query) {
-            if (artists.length) {
-                results.push({ Artists: artists });
-            }
-            if (albums.length) {
-                results.push({ Albums: albums })
-            }
-            if (songs.length) {
-                results.push({ Songs: songs })
-            }
-
-
-        }
         if (query == 'undefined') {
             results = [];
+        } else {
+            if (query) {
+                if (artists.length) {
+                    results.push({ Artists: artists });
+                }
+                if (albums.length) {
+                    results.push({ Albums: albums })
+                }
+                if (songs.length) {
+                    results.push({ Songs: songs })
+                }
+
+
+            }
+        }
+        if (results.length) {
+            return res.status(200).send({ results });
+        } else {
+            return res.status(404).send({ message: 'Sin resultados', results });
         }
 
 
-        return res.status(200).send({ results });
 
 
 

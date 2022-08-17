@@ -13,13 +13,22 @@ const googleVerify = async(token = '') => {
             //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
         });
 
-        const { given_name, family_name, picture, email } = ticket.getPayload();
+        if (ticket) {
 
-        return {
-            given_name,
-            family_name,
-            picture,
-            email
+            const { given_name, family_name, picture, email } = ticket.getPayload();
+
+            return {
+                given_name,
+                family_name,
+                picture,
+                email
+            }
+
+        } else {
+            given_name = undefined,
+                family_name = undefined,
+                picture = undefined,
+                email = undefined
         }
 
     } catch (error) {

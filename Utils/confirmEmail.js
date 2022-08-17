@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const config = require('../config/config');
+const config = require('../Config/config');
 
 async function confirmEmail(nombre, lastname, email, code) {
     try {
