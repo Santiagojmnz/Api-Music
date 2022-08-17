@@ -11,17 +11,16 @@ async function updateSong(req, res) {
         const validExtensions = ['mp3', 'm4a', 'mpeg'];
         if (params.name != null && params.name != '' && params.number != null && params.number != '' && params.album != null && params.album != '') {
 
-            const exists = Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
+            const exists = await Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
             if (exists.length) {
-                return res.status(500).send({ message: 'Canción existente' });
-            }
-
-            if (req.files) {
+                return res.status(400).send({ message: 'Canción existente' });
+            } 
+            else if (req.files) {
                 Song.findById(req.params.id)
                     .then((songName) => {
                         if (songName.file) {
                             const path = path.join(__dirname, '../../Songs/', songName.file);
-                            const exists = await fs.existsSync(path);
+                            const exists = fs.existsSync(path);
                             if (exists) {
                                 fs.unlinkSync('Songs/' + songName.file)
                             }

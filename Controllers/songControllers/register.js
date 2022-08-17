@@ -6,7 +6,6 @@ const fs = require('fs');
 
 const songRegister = async(req, res) => {
     try {
-    const param = req.files.file;
     const validExtensions = ['mp3', 'm4a', 'mpeg']
     const binder = 'Songs';
     const params = req.body;
@@ -19,7 +18,7 @@ const songRegister = async(req, res) => {
                 return res.status(400).send({ message: 'La canción ya se encuentra registrada: ' + song.name });
 
             } else {
-                // if (!req.files) {return res.status(400).send({ message: 'Falta el archivo de audio' });}
+                if (!req.files) {return res.status(400).send({ message: 'Falta el archivo de audio' });}
                 const albumexists = await Album.findOne(song.album);
                 if (!albumexists) {
                     console.log("No existe")
