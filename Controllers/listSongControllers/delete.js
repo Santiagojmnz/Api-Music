@@ -11,7 +11,7 @@ function deleteListSong(req, res) {
                             return res.status(200).send({ message: 'Canción eliminada de la lista de reproducción' });
                         })
                 } else {
-                    return res.status(500).send({ message: 'Problemas al eliminar la canción de la lista de reproducción' });
+                    return res.status(404).send({ message: 'Canción no encontrada' });
                 }
             })
     } catch (error) {

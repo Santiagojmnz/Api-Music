@@ -6,9 +6,9 @@ function findAlbum(req, res) {
         Album.find().populate('artist')
         .then(album => {
             if (album) {
-                res.json(album)
+                res.status(200).send({album})
             } else {
-                res.status(500).send({ message: 'No se pudo cargar los Álbumes' })
+                res.status(404).send({ message: 'No se pudieron cargar los Álbumes' })
             }
         })
     }catch (error) {
@@ -35,7 +35,7 @@ function albumPaginate(req, res) {
         Album.paginate({}, options)
             .then(album => {
                 if (album) {
-                    res.json(album)
+                    res.status(200).send({album})
                 } else {
                     res.status(500).send({ message: 'No se pudieron cargar los álbumes' })
                 }
@@ -45,23 +45,22 @@ function albumPaginate(req, res) {
     }
     
 };
-
 function findAlbumId(req, res) {
-    try{
-        var albumId = req.params.id;
-        Album.findById(albumId).populate('artist')
-            .then(album => {
-                if (album) {
-                    res.json(album)
-                } else {
-                    res.status(500).send({ message: 'No se encontró el Álbum' })
-                }
-            })
-    }catch (error) {
-        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
+    try {
+        Album.findOne({ _id: req.params.id})
+        .then((album)=>{
+            if(album){
+                res.status(200).send({album})
+            }else{
+                res.status(404).send({ message: 'No se encontró el álbum' })
+            }
+        })
 
+    } catch (error) {
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
-    }
+
+};
     
 
 module.exports = {
