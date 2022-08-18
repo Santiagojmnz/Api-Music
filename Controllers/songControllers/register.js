@@ -1,23 +1,28 @@
 const Song = require('../../Models/song');
+const Album = require('../../Models/album');
 const { fileUpload } = require('../../Helpers/fileUpload');
 const getMP3Duration = require('get-mp3-duration')
 const fs = require('fs');
 
 const songRegister = async(req, res) => {
     try {
-    const param = req.files.file;
     const validExtensions = ['mp3', 'm4a', 'mpeg']
     const binder = 'Songs';
     const params = req.body;
-        if (params.number != null && params.name != null && params.album != null) {
+        if (params.number != null && params.name != null && params.album != null && params.number != "" && params.name != "" && params.album != "") {
             const song = await new Song(params);
             const songResult = await Song.find({ name: song.name, album: song.album });
 
             if (songResult.length) {
 
-                return res.status(500).send({ message: 'La canción ya se encuentra registrada: ' + song.name });
+                return res.status(400).send({ message: 'La canción ya se encuentra registrada: ' + song.name });
 
             } else {
+                if (!req.files) {return res.status(400).send({ message: 'Falta el archivo de audio' });}
+                const albumexists = await Album.findOne(song.album);
+                if (!albumexists) {
+                    console.log("No existe")
+                }
                 const name = await fileUpload(req.files, validExtensions, binder);
 
                 const buffer = await fs.readFileSync(`${binder}/${name}`);
@@ -34,7 +39,6 @@ const songRegister = async(req, res) => {
         }
 
     } catch (error) {
-
         res.send({ message: `${error}` })
     }
 }
