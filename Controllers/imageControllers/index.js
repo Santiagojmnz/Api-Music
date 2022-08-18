@@ -72,7 +72,7 @@ const uploadImageUser = async(req, res) => {
     const binder = 'Images';
     const name = await fileUpload(req.files, validExtensions, binder);
     const id = req.params.id;
-    const user = await User.findById(id);
+    const user = await User.findByIdAndUpdate(id);
     if (user) {
         if (user.image) {
             const pathImage = path.join(__dirname, '../../Images/', user.image);
