@@ -4,15 +4,10 @@ const { passwordEmail } = require('../../Utils/recContrasena');
 
 exports.resetContrasena = async(request, response, next) => {
     try {
-        // comprueba la existencia del parametro email
-        if (!request.body.email) {
-            return response.status(400).json({ error: true, message: 'Debe proporcionar el email.' });
-        }
-
         // busca el usuario con ese email
         const usuario = await Usuario.findOne({ email: request.body.email });
         if (!usuario) {
-            return response.status(404).json({ message: 'No existe el usuario. ' });
+            return response.status(404).json({ message: 'No se encontró el correo electrónico en la base de datos' });
         }
 
         // genera el token de recuperación de contraseña
@@ -27,26 +22,21 @@ exports.resetContrasena = async(request, response, next) => {
         await usuario.save();
 
         // envia el email
-        const resultadoEmail = await passwordEmail(
+        const resultadoEmail = passwordEmail(
             usuario.name, usuario.surname,
             usuario.email,
-            token
-        );
+            usuario.token
+        )
 
         if (resultadoEmail) {
-            response.json({ message: 'Un mensaje ha sido enviado al email proporcionado.' });
-        } else {
-            response.status(503).json({
-                error: true,
-                message: 'Ocurrió un error al enviar el email de recuperación.',
-            })
+            response.status(200).send({ message: 'Correo electrónico enviado , revisa tu bandeja de entrada ' });
         }
 
     } catch (error) {
         console.log(error);
         response.status(503).json({
             error: true,
-            message: 'Ocurrió un error al intentar enviar el email de recuperación.',
+            message: 'Ocurrió un error al intentar enviar el email de recuperación.' + error
         })
     }
 };
@@ -59,24 +49,24 @@ exports.validarToken = async(request, response, next) => {
             token: request.body.token,
             expire: {
                 $gte: new Date()
-            }, 
+            },
 
         });
 
         if (!usuario) {
             return response.status(400).json({
-                message: 'El link de restablecimineto es inválido o ya ha expirado.'
+                message: 'El link de restablecimiento es inválido o ha expirado'
             });
         }
 
         // retorna un status que indique si es válido
-        response.json({
+        response.status(200).json({
             isValid: true,
-            message: 'Ingrese una nueva contraseña.',
+            message: 'Ingrese una nueva contraseña',
         });
     } catch (error) {
         console.log(error);
-        response.status(503).json({ message: 'Error al validar el token.' });
+        response.status(503).json({ message: 'Error al validar el token' });
     }
 };
 
@@ -88,19 +78,19 @@ exports.guardarNuevaContrasena = async(request, response, next) => {
             token: request.body.token,
             expire: {
                 $gte: new Date()
-            }, 
+            },
 
         });
 
         if (!usuario) {
             return response.status(400).json({
-                message: 'El link de restablecimiento es inválido o ha expirado.'
+                message: 'El link de restablecimiento es inválido o ha expirado'
             });
         }
 
         // valida que se reciba la contraseña
         if (!request.body.password) {
-            response.status(400).json({ message: 'La contraseña es obligatoria.' });
+            return response.status(400).json({ message: 'La contraseña es obligatoria' });
         }
 
         // cifra la contraseña y la introduce en los datos del usuario
@@ -115,7 +105,7 @@ exports.guardarNuevaContrasena = async(request, response, next) => {
             usuario.save();
         });
 
-        response.json({ message: 'La nueva contraseña ha sido guardada.' });
+        response.status(200).json({ message: 'La nueva contraseña ha sido guardada' });
 
     } catch (error) {
         console.log(error);

@@ -6,30 +6,35 @@ const changePassword = async(req, res) => {
     const newPassword = req.body.newPassword;
     const confirmPassword = req.body.confirmPassword;
     const id = req.params.id;
-    try  {
-        if(password != null && newPassword != null && confirmPassword != null){
+    try {
+        if (password != null && newPassword != null && confirmPassword != null && password != "" && newPassword != "" && confirmPassword != "") {
             const user = await User.findById({ _id: id });
-            const comparePass = bcrypt.compareSync(password, user.password)
-            if (!comparePass) {
-                res.status(500).send({ message: 'Error al actualizar la contraseña, Contraseña incorrecta' })
-            } else {
-    
-                if (newPassword == confirmPassword) {
-                    const hash = bcrypt.hashSync(newPassword, 10);
-                    user.password = hash;
-                    res.status(200).send({ message: 'Contraseña actualizada' })
-                    user.save();
-    
+            if (user) {
+                const comparePass = bcrypt.compareSync(password, user.password)
+                if (!comparePass) {
+                    return res.status(400).send({ message: 'Error al actualizar la contraseña, Contraseña actual incorrecta' })
                 } else {
-                    res.status(500).send({ message: 'La confirmación de contraseña no coincide' })
+
+                    if (newPassword == confirmPassword) {
+                        const hash = bcrypt.hashSync(newPassword, 10);
+                        user.password = hash;
+                        user.save();
+                        return res.status(200).send({ message: 'Contraseña actualizada' })
+
+                    } else {
+                        return res.status(400).send({ message: 'La confirmación de contraseña no coincide' })
+                    }
                 }
+            } else {
+                return res.status(404).send({ message: 'El usuario no existe' })
             }
-        } else{
-            res.status(500).send({message: 'Los campos no pueden quedar vacíos'})
+
+        } else {
+            res.status(400).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' })
         }
     } catch (err) {
         res.status(500).send({ message: 'Error al procesar la petición ' + err })
-}
+    }
 }
 
 

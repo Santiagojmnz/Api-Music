@@ -2,27 +2,32 @@ const User = require('../../Models/user');
 const { tokenData } = require('../../Services/jwt.js')
 
 const confirmEmail = async(req, res) => {
-    const { token } = req.params;
-    const data = await tokenData(token);
-    const { code, email } = data.data;
+    try {
+        const { token } = req.params;
+        const data = await tokenData(token);
+        const { code, email } = data.data;
 
-    User.findOne({ email })
+        User.findOne({ email })
 
-    .then((user) => {
+        .then((user) => {
             if (user.code == code && user.status == 'UNVERIFIED') {
                 user.status = "VERIFIED";
                 user.code = "";
                 user.save()
-                return res.status(200).json({ message: 'Cuenta verificada correctamente: ' + user.email })
+                return res.status(200).json({ message: 'Cuenta verificada correctamente: ' + user.email });
 
             } else {
-                return res.status(200).json({ message: 'La cuenta ya ha sido verificada: ' + user.email })
+                return res.status(200).json({ message: 'La cuenta ya ha sido verificada anteriormente' + user.email });
 
             }
         })
-        .catch((err) => {
-            res.status(500).json({ message: 'Error al procesar la petición ' + err })
-        });
+    } catch (error) {
+        if (error.message === "invalid signature") {
+            return res.status(400).send({ message: 'Token no válido' });
+        }
+        return res.status(500).send({ message: 'Error al procesar la petición' + error });
+
+    }
 
 
 

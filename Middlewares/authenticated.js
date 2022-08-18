@@ -5,7 +5,7 @@ const { tokenData } = require('../Services/jwt')
 exports.ensureAuth = async(req, res, next) => {
     const token = req.headers.authorization
     if (!token) {
-        return res.status(403).send({ message: 'La petición no tiene la cabecera de autenticación' });
+        return res.status(401).send({ message: 'La petición no tiene la cabecera de autenticación' });
     }
 
     try {
@@ -17,7 +17,7 @@ exports.ensureAuth = async(req, res, next) => {
 
     } catch (error) {
         if (error.message === "jwt expired") {
-            return res.status(403).send({ message: 'Token expirado' });
+            return res.status(401).send({ message: 'Token expirado' });
         }
         return res.status(401).send({ message: 'Token no válido' });
 
