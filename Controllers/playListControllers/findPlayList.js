@@ -26,7 +26,7 @@ function findPlayListId(req, res) {
                 if (playList) {
                     res.json(playList)
                 } else {
-                    res.status(500).send({ message: 'No se encontró la lista de reproducción' })
+                    res.status(404).send({ message: 'No se encontró la lista de reproducción' })
                 }
             })
     }catch (error) {

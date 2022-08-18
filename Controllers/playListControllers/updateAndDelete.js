@@ -1,14 +1,15 @@
 const PlayList = require('../../Models/playList');
 const ListSong = require('../../Models/listSong');
 
-function updatePList(req, res) {
+async function updatePList(req, res) {
     try {
         const params = req.body;
         if (params.user != null && params.user != "" && params.name != null && params.name != '') {
 
-            const exists = PlayList.find({ _id: { $ne: req.params.id }, name: params.name, user: params.user })
+            const exists = await PlayList.find({ user: req.body.user, name: req.body.name })
+            
             if (exists.length) {
-                return res.status(500).send({ message: 'Lista de reproducción existente' });
+                return res.status(400).send({ message: 'Lista de reproducción existente' });
             }
 
             PlayList.findByIdAndUpdate({ _id: req.params.id }, params)

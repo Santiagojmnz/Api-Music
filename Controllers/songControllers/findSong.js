@@ -21,16 +21,15 @@ function findSong(req, res) {
 
 function findSongId(req, res) {
     try {
-        const { id } = req.body;
-        Song.find(id)
-            .then(song => {
-                if (song) {
-                    const song = path.join(__dirname, '../../Songs', req.params.name)
-                    mediaserver.pipe(req, res, song);
-                } else {
-                    res.status(500).send({ message: 'No se encontró la canción' })
-                }
-            })
+        Song.findOne({file: req.params.name})
+        .then((song)=>{
+            if(song){
+                const song = path.join(__dirname, '../../Songs', req.params.name)
+                mediaserver.pipe(req, res, song);
+            }else{
+                res.status(404).send({ message: 'No se encontró la canción' })
+            }
+        })
 
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición: ' + error });
