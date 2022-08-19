@@ -6,8 +6,8 @@ async function updatePList(req, res) {
         const params = req.body;
         if (params.user != null && params.user != "" && params.name != null && params.name != '') {
 
-            const exists = await PlayList.find({ user: req.body.user, name: req.body.name })
-            
+            const exists = await PlayList.find({ _id: { $ne: req.params.id }, user: req.body.user, name: req.body.name })
+
             if (exists.length) {
                 return res.status(400).send({ message: 'Lista de reproducción existente' });
             }
@@ -31,15 +31,14 @@ async function updatePList(req, res) {
 
 function deletePlayList(req, res) {
     try {
-    const id = req.params.id;
+        const id = req.params.id;
         PlayList.findOne({ _id: id })
             .then((list) => {
                 if (list) {
                     ListSong.find({ playlist: id })
                         .then((songs) => {
                             ListSong.deleteMany({ playlist: id })
-                                .then((deletedSongs) => {
-                                })
+                                .then((deletedSongs) => {})
                         })
                     PlayList.findByIdAndDelete(req.params.id)
                         .then(() => {

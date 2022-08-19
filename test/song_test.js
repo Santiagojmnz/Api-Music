@@ -4,63 +4,66 @@ const expect = require("chai").expect;
 
 chai.use(chaiHTTP);
 const url = "http://localhost:8000/api";
-const Authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJiY2FjNDAwMjUwYzgxNDM0NDBhMjVmIiwiaWF0IjoxNjU5MzE4NDEyLCJleHAiOjE2NjE5MTA0MTJ9.eou4yXQHt6G2jpYbPk17f61LG1_QHa23iP6kYn31TVE";
+const Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 
 describe("Pruebas a Song (almacenar canción)", () => {
     //Pruebas a add
     describe("Agregar canción", () => {
         it("Debe almacenar la canción", (done) => {
             chai.request(url)
-            .post('/new-song')
-            .set('Authorization', `${Authorization}`)
-            .field('Content-Type', 'multipart/form-data')
-            .field({
-                "name" : "prelude",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"})
-            .attach("file", "/Users/JOSEFRANCO/Music/TheFatRat_-_Prelude.mp3")
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.have.property('message').to.be.equal('Canción registrada');
-                    done();
-                }
-            )
+                .post('/new-song')
+                .set('Authorization', `${Authorization}`)
+                .field('Content-Type', 'multipart/form-data')
+                .field({
+                    "name": "prelude5",
+                    "number": "137",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.have.property('message').to.be.equal('Canción registrada');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar almacenar la canción por falta de credenciales", (done) => {
             chai.request(url)
-            .post('/new-song')
-            .field('Content-Type', 'multipart/form-data')
-            .field({
-                "name" : "prelude",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"})
-            .attach("file", "/Users/JOSEFRANCO/Music/TheFatRat_-_Prelude.mp3")
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(403);
-                    expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
-                    done();
-                }
-            )
+                .post('/new-song')
+                .field('Content-Type', 'multipart/form-data')
+                .field({
+                    "name": "prelude2",
+                    "number": "1",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(401);
+                        expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar almacenar la canción por campos vacíos", (done) => {
             chai.request(url)
-            .post('/new-song')
-            .set('Authorization', `${Authorization}`)
-            .field('Content-Type', 'multipart/form-data')
-            .field({
-                "name" : "",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"})
-            .attach("file", "/Users/JOSEFRANCO/Music/TheFatRat_-_Prelude.mp3")
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(500);
-                    expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
-                    done();
-                }
-            )
+                .post('/new-song')
+                .set('Authorization', `${Authorization}`)
+                .field('Content-Type', 'multipart/form-data')
+                .field({
+                    "name": "",
+                    "number": "1",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(500);
+                        expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar almacenar la canción por ausencia de archivo", (done) => {
             chai.request(url)
@@ -73,7 +76,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                     "album": "62c7b30143432840ef614684"
                 })
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('Falta el archivo de audio');
                         done();
@@ -89,9 +92,9 @@ describe("Pruebas a Song (almacenar canción)", () => {
                     "name": "hola",
                     "album": "62c7b30143432840ef614684"
                 })
-                .attach("file", "/Users/JOSEFRANCO/Music/TheFatRat_-_Prelude.mp3")
+                .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(500);
                         expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
                         done();
@@ -103,71 +106,72 @@ describe("Pruebas a Song (almacenar canción)", () => {
     describe("Actualizar canción", () => {
         it("Debe actualizar la canción sin archivo", (done) => {
             chai.request(url)
-            .put('/update-song/62cdeda3c33785ba103b7e83')
-            .set('Authorization', `${Authorization}`)
-            .send({
-                "name" : "nekozila",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"
-            })
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
-                    done();
-                }
-            )
+                .put('/update-song/62cdeda3c33785ba103b7e83')
+                .set('Authorization', `${Authorization}`)
+                .send({
+                    "name": "nekozila",
+                    "number": "1",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
+                        done();
+                    }
+                )
         })
         it("Debe actualizar la canción con archivo", (done) => {
             chai.request(url)
-            .put('/update-song/62cdeda3c33785ba103b7e83')
-            .set('Authorization', `${Authorization}`)
-            .field('Content-Type', 'multipart/form-data')
-            .field({
-                "name" : "prelude",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"})
-            .attach("file", "/Users/JOSEFRANCO/Music/TheFatRat_-_Prelude.mp3")
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
-                    done();
-                }
-            )
+                .put('/update-song/62cdeda3c33785ba103b7e83')
+                .set('Authorization', `${Authorization}`)
+                .field('Content-Type', 'multipart/form-data')
+                .field({
+                    "name": "prelude",
+                    "number": "1",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar la actualización de canción por falta de credenciales", (done) => {
             chai.request(url)
-            .put('/update-song/62cdeda3c33785ba103b7e83')
-            .send({
-                "name" : "hola",
-                "number" : "1",
-                "album": "62c7b30143432840ef614684"
-            })
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(403);
-                    expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
-                    done();
-                }
-            )
+                .put('/update-song/62cdeda3c33785ba103b7e83')
+                .send({
+                    "name": "hola",
+                    "number": "1",
+                    "album": "62c7b30143432840ef614684"
+                })
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(401);
+                        expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar la actualización de canción por campos vacíos", (done) => {
             chai.request(url)
-            .put('/update-song/62cdeda3c33785ba103b7e83')
-            .set('Authorization', `${Authorization}`)
-            .send({
-                "name" : "hola",
-                "number" : "1",
-                "album": ""
-            })
-            .end(
-                function(err, res){
-                    expect(res).to.have.status(500);
-                    expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
-                    done();
-                }
-            )
+                .put('/update-song/62cdeda3c33785ba103b7e83')
+                .set('Authorization', `${Authorization}`)
+                .send({
+                    "name": "hola",
+                    "number": "1",
+                    "album": ""
+                })
+                .end(
+                    function(err, res) {
+                        expect(res).to.have.status(500);
+                        expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
+                        done();
+                    }
+                )
         })
         it("Debe rechazar la actualización de canción por ausencia de campos", (done) => {
             chai.request(url)
@@ -178,7 +182,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                     "number": "1"
                 })
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(500);
                         expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
                         done();
@@ -195,7 +199,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                     "album": "62c7b30143432840ef614684"
                 })
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('MonngoId inválido');
                         done();
@@ -212,7 +216,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                     "album": "62ccf61f8350a09d22af737c"
                 })
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('Canción existente');
                         done();
@@ -221,13 +225,14 @@ describe("Pruebas a Song (almacenar canción)", () => {
         })
     });
     //Pruebas delete
+
     describe("Eliminar canción ", () => {
         it("Debe eliminar la canción", (done) => {
             chai.request(url)
-                .delete('/delete-song/62e76e928a3dd7faddfddeeb')
+                .delete('/delete-song/62fefdae2ebedf23b33c0754')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(200);
                         expect(res.body).to.have.property('message').to.be.equal('Canción eliminada');
                         done();
@@ -238,8 +243,8 @@ describe("Pruebas a Song (almacenar canción)", () => {
             chai.request(url)
                 .delete('/delete-song/62e76e928a3dd7faddfddeeb')
                 .end(
-                    function (err, res) {
-                        expect(res).to.have.status(403);
+                    function(err, res) {
+                        expect(res).to.have.status(401);
                         expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
                         done();
                     }
@@ -250,7 +255,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .delete('/delete-song/62e76e928a3dd7faddfdde7b')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(404);
                         expect(res.body).to.have.property('message').to.be.equal('Canción no encontrada');
                         done();
@@ -262,7 +267,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .delete('/delete-song/62e76e928a3dd7faddfdde')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('MonngoId inválido');
                         done();
@@ -277,7 +282,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .get('/songs')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(200);
                         done();
                     }
@@ -287,14 +292,15 @@ describe("Pruebas a Song (almacenar canción)", () => {
             chai.request(url)
                 .get('/songs')
                 .end(
-                    function (err, res) {
-                        expect(res).to.have.status(403);
+                    function(err, res) {
+                        expect(res).to.have.status(401);
                         expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
                         done();
                     }
                 )
         })
     });
+
     //Pruebas get song
     describe("Obtener una cancion", () => {
         it("Debe obtener la canción", (done) => {
@@ -302,7 +308,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .get('/song/9e03088111efdf83.mp3')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(200);
                         done();
                     }
@@ -312,8 +318,8 @@ describe("Pruebas a Song (almacenar canción)", () => {
             chai.request(url)
                 .get('/song/9e03088111efdf83.mp3')
                 .end(
-                    function (err, res) {
-                        expect(res).to.have.status(403);
+                    function(err, res) {
+                        expect(res).to.have.status(401);
                         expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
                         done();
                     }
@@ -324,7 +330,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .get('/song/9e03088111efdff3.mp3')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(404);
                         expect(res.body).to.have.property('message').to.be.equal('No se encontró la canción');
                         done();
@@ -339,7 +345,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .get('/songs/1')
                 .set('Authorization', `${Authorization}`)
                 .end(
-                    function (err, res) {
+                    function(err, res) {
                         expect(res).to.have.status(200);
                         done();
                     }
@@ -349,8 +355,8 @@ describe("Pruebas a Song (almacenar canción)", () => {
             chai.request(url)
                 .get('/songs/2')
                 .end(
-                    function (err, res) {
-                        expect(res).to.have.status(403);
+                    function(err, res) {
+                        expect(res).to.have.status(401);
                         expect(res.body).to.have.property('message').to.be.equal('La petición no tiene la cabecera de autenticación');
                         done();
                     }

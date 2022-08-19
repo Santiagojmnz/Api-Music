@@ -4,6 +4,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 const url = 'http://localhost:8000';
+const token = "$2b$10$5QwdE.img-wliJTacZCsLesJYGphQ7u4lMV1CYoEZLTOqtpU8fC0W";
 
 describe('Guardar nueva contraseña', () => {
 
@@ -11,7 +12,7 @@ describe('Guardar nueva contraseña', () => {
         chai.request(url)
             .post('/api/update-password')
             .send({
-                token: "$2b$10$9zmTD.odkVneRa.9mY4ojeqd6apqBwVjyVXMxiaiUfx7GiWfh.aam"
+                token: token
 
             })
             .end((error, response) => {
@@ -26,7 +27,7 @@ describe('Guardar nueva contraseña', () => {
         chai.request(url)
             .post('/api/update-password')
             .send({
-                token: "$2b$10$9zmTD.odkVneRa.9mY4ojeqd6apqBwVjyVXMxiaiUfx7GiWfh.aam",
+                token: token,
                 password: "asde456"
             })
             .end((error, response) => {
@@ -42,7 +43,7 @@ describe('Guardar nueva contraseña', () => {
         chai.request(url)
             .post('/api/update-password')
             .send({
-                token: "$2b$10$9zmTD.odkVneRa.9mY4ojeqd6apqBwVjyVXMxiaiUfx7GiWfh.aam" + "jdfkl",
+                token: token + "jdfkl",
                 password: 'asde456'
 
             })

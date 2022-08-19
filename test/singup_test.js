@@ -10,9 +10,9 @@ describe('Registro de usuario', () => { //Se definen bloques de pruebas
         chai.request(url) //Ruta base
             .post('/api/new-user') //Enpoint y metodo
             .send({ //Send informacion a enviar
-                name: 'Juan',
-                surname: 'Dominguez',
-                email: "sanjimenzasde@gmail.com",
+                name: 'Juan25',
+                surname: 'Dominguez1',
+                email: "sanjimenzasde2wee6@gmail.com",
                 password: 'abc'
 
             })

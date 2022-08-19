@@ -11,7 +11,7 @@ const tokenExpire = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNT
 describe('Eliminar usuario', () => {
     it('Debe eliminar al usuario', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154a')
+            .delete('/api/delete-user/62ff12f22a50c48c005d6012')
             .set({ 'Authorization': tokenAdmin })
             .end((error, response) => {
                 expect(response).to.have.status(200);

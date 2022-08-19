@@ -2,6 +2,7 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
+const token = "$2b$10$5QwdE.img-wliJTacZCsLesJYGphQ7u4lMV1CYoEZLTOqtpU8fC0W";
 
 const url = 'http://localhost:8000';
 describe('Validar token', () => {
@@ -9,7 +10,7 @@ describe('Validar token', () => {
         chai.request(url)
             .post('/api/validate-token')
             .send({
-                token: "$2b$10$9zmTD.odkVneRa.9mY4ojeqd6apqBwVjyVXMxiaiUfx7GiWfh.aam"
+                token: token
             })
             .end((error, response) => {
                 expect(response).to.have.status(200);
@@ -23,7 +24,7 @@ describe('Validar token', () => {
         chai.request(url)
             .post('/api/validate-token')
             .send({
-                token: "$2b$10$XE-6aL-svcBqrW5.16Pl7u.-IjCQ9b8kg5o7ZjNwrBQKSRhfV10DC1"
+                token: token + "sd"
             })
             .end((error, response) => {
                 expect(response).to.have.status(400);

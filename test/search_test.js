@@ -21,7 +21,7 @@ describe('Buscador', () => {
     })
     it('Buscador - query sin resultados', (done) => {
         chai.request(url)
-            .get('/api/search/dark')
+            .get('/api/search/wrto')
             .set({ 'Authorization': token })
             .end((error, response) => {
                 expect(response).to.have.status(404);
