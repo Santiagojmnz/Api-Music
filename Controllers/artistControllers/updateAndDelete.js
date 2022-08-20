@@ -40,7 +40,13 @@ function deleteArtist(req, res) {
                                 Song.find({album: album._id})
                                 .then((songs) => {
                                     songs.forEach((delsong) => {
-                                        fs.unlinkSync('Songs/' + delsong.file)
+                                        if (delsong.file) {
+                                            const path = path.join(__dirname, '../../Songs/', delsong.file);
+                                            const exists = fs.existsSync(path);
+                                            if (exists) {
+                                                fs.unlinkSync('Songs/' + delsong.file)
+                                            }
+                                        }
                                         
                                     })
                                     Song.deleteMany({ album: album._id })

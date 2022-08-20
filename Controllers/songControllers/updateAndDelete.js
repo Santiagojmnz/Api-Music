@@ -14,7 +14,7 @@ async function updateSong(req, res) {
             const exists = await Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
             if (exists.length) {
                 return res.status(400).send({ message: 'Canción existente' });
-            } 
+            }
             else if (req.files) {
                 Song.findById(req.params.id)
                     .then((songName) => {
@@ -65,7 +65,13 @@ async function deleteSong(req, res) {
     try {
         const song = await Song.findOne({ _id: req.params.id });
         if (song) {
-            fs.unlinkSync('Songs/' + song.file);
+            if (song.file) {
+                const path = path.join(__dirname, '../../Songs/', song.file);
+                const exists = fs.existsSync(path);
+                if (exists) {
+                    fs.unlinkSync('Songs/' + song.file)
+                }
+            }
             Song.findByIdAndDelete(req.params.id)
                 .then(() => {
                     return res.status(200).send({ message: 'Canción eliminada' });
