@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 const dotenv =require('dotenv').config();
-const servidor = process.env.SERVIDOR_SMTP
 const config = process.env;
 exports.passwordEmail = async(name, surname, email, token) => {
     try {
