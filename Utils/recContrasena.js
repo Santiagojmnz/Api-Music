@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
-const config = require('../config/Config');
+const dotenv =require('dotenv').config();
+const servidor = process.env.SERVIDOR_SMTP
+const config = process.env;
 exports.passwordEmail = async(name, surname, email, token) => {
     try {
         let transporter = nodemailer.createTransport({
