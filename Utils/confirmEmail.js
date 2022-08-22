@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-const config = require('../Config/config');
-
+const dotenv =require('dotenv').config();
+const config = process.env;
 async function confirmEmail(nombre, lastname, email, code) {
     try {
         let transporter = nodemailer.createTransport({
