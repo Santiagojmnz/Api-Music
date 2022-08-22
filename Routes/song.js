@@ -1,0 +1,13 @@
+const express = require('express');
+const api = express.Router();
+const songController = require('../Controllers/songControllers');
+const { ensureAuth } = require('../Middlewares/authenticated');
+const { isAdmin } = require('../Middlewares/isAdmin');
+const {isMongoId} = require('../Middlewares/validar-campos');
+api.post('/new-song', ensureAuth, isAdmin, songController.songRegister);
+api.put('/update-song/:id', ensureAuth, isAdmin,isMongoId, songController.updateSong);
+api.delete('/delete-song/:id', ensureAuth, isAdmin,isMongoId, songController.deleteSong);
+api.get('/songs', ensureAuth, songController.findSong);
+api.get('/song/:name', ensureAuth, songController.findSongId);
+api.get('/songs/:page', ensureAuth, songController.songsPaginate);
+module.exports = api;
