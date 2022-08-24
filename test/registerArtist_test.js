@@ -3,7 +3,8 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
-const url = 'http://localhost:8000/api';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 describe('Artista', () => {
@@ -13,8 +14,8 @@ describe('Artista', () => {
                 .post('/new-artist')
                 .set({ Authorization: token })
                 .send({
-                    name: "Jenni Rivera6",
-                    description: "Janney Dolores Rivera Saavedra, conocida artisticamente como Jenni Rivera",
+                    name: "ZPU",
+                    description: "Juan Prieto Sánchez, más conocido como ZPU, es un MC, escritor y poeta de rap en español.​ Es reconocido por ser uno de los raperos más profundos y relevantes de la escena del hip hop de habla hispana. ",
                 })
                 .end(function(err, res) {
                     expect(res).to.have.status(200);

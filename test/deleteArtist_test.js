@@ -1,17 +1,15 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
-
 chai.use(chaiHttp);
-const url = 'http://localhost:8000/api';
-
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
-
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 describe('Artista', () => {
     describe('Eliminar artista: ', () => {
         it('Eliminar artista con usuario autenticado', (done) => {
             chai.request(url)
-                .delete('/delete-artist/62ff17d02ebedf23b33c07b0')
+                .delete('/delete-artist/62ff20d7f2ae4e0de5ee29ab')
                 .set({ Authorization: token })
                 .end(function(err, res) {
                     expect(res).to.have.status(200);

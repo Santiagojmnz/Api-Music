@@ -3,7 +3,8 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
-const url = 'http://localhost:8000/api';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 
@@ -14,8 +15,8 @@ describe('listSong', () => {
                 .post('/add-song')
                 .set({ Authorization: token })
                 .send({
-                    playlist: "62ff0cda2ebedf23b33c076e",
-                    song: "62ce3e31390c6ca533502830",
+                    playlist: "62ec93fa675475d69d10822d",
+                    song: "62c5c2475953b5aebc87acea",
                 })
                 .end(function(err, res) {
                     expect(res).to.have.status(200);

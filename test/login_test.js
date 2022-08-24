@@ -3,13 +3,13 @@ const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const url = 'http://localhost:8000';
-
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 describe('Autenticar usuario', () => {
     it('Debe autenticar al usuario', (done) => {
         chai.request(url)
-            .post('/api/login')
+            .post('/login')
             .send({
                 email: "jmnzsantiago@gmail.com",
                 password: 'asde456'
@@ -25,7 +25,7 @@ describe('Autenticar usuario', () => {
     })
     it('No debe autenticar al usuario - El usuario no existe', (done) => {
         chai.request(url)
-            .post('/api/login')
+            .post('/login')
             .send({
                 email: "jmnz00@gmail.com",
                 password: 'jdksljdlsj'
@@ -41,7 +41,7 @@ describe('Autenticar usuario', () => {
     })
     it('No debe autenticar al usuario - Cuenta no verificada', (done) => {
         chai.request(url)
-            .post('/api/login')
+            .post('/login')
             .send({
                 email: "santiag1325@gmail.com",
                 password: 'asde456'
@@ -56,7 +56,7 @@ describe('Autenticar usuario', () => {
     })
     it('No debe autenticar al usuario - Usuario y/o contraseña incorrecta', (done) => {
         chai.request(url)
-            .post('/api/login')
+            .post('/login')
             .send({
                 email: "jmnzsantiago@gmail.com",
                 password: 'jdkljfkldsjfkls'

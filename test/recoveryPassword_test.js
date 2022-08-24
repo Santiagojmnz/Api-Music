@@ -3,12 +3,13 @@ const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const url = 'http://localhost:8000';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 describe('Recuperar Contraseña - Envío de email de recuperación', () => {
     it('Debe enviar el email de recuperación', (done) => {
         chai.request(url)
-            .post('/api/restore-password')
+            .post('/restore-password')
             .send({
                 email: "osoriof543@gmail.com",
             })
@@ -23,7 +24,7 @@ describe('Recuperar Contraseña - Envío de email de recuperación', () => {
 
     it('No debe enviar el email de recuperación - usuario no existe en base de datos', (done) => {
         chai.request(url)
-            .post('/api/restore-password')
+            .post('/restore-password')
             .send({
                 email: "jimnzsantiago123@gmail.com",
             })
@@ -38,7 +39,7 @@ describe('Recuperar Contraseña - Envío de email de recuperación', () => {
 
     it('No debe enviar el email de recuperación - Email inválido', (done) => {
         chai.request(url)
-            .post('/api/restore-password')
+            .post('/restore-password')
             .send({
                 email: "abc@gmail",
             })

@@ -2,12 +2,13 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
-const token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3MjdiNmI0OTQwMmI5Y2Y5NWJlNGU4ZmQzOGFhN2U3YzExNjQ0YjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjA4ODY2NDQsImF1ZCI6Ijc3MjQzNDUxNjQ0LXNtODZudnIyNXEzbzUxZWlqbTNvNW00OGEwcjcyZmVkLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyNDE0MDY1NjcyOTI5MDE3OTE2IiwiZW1haWwiOiJwYXVsaW5hZ2FyY2lham92QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI3NzI0MzQ1MTY0NC1zbTg2bnZyMjVxM281MWVpam0zbzVtNDhhMHI3MmZlZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJwYXVsaW5hIG9jYW1wbyBnYXJjaWEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUl0YnZtbFVKWXM2Rm9hMldZVlBPNkRBQzRuZlQ2LWg5S0lSeGt4ckxvV0Y9czk2LWMiLCJnaXZlbl9uYW1lIjoicGF1bGluYSIsImZhbWlseV9uYW1lIjoib2NhbXBvIGdhcmNpYSIsImlhdCI6MTY2MDg4Njk0NCwiZXhwIjoxNjYwODkwNTQ0LCJqdGkiOiJiMmI5ZTYxNzQyNTYzMzRkYWE1NzFhOTQ0N2FhNzA3OGM0MzIzMThiIn0.SJnNbqjcJWVTwM1lS2b3D5Nhh-uIQqVSCyK8kkiPm6WOP_yCr0UBn2eCqYS5953OQnSIEAAIH6_IVQSzNO5M7BPTcIV_GJnmmmQ5enaNGWivcm-NNrZRrG-NjpvC05UwkZMCd8RaqkWjIBgcFWM7J40yT6LldeWeKY_kYqRyessSzBSdxIVFKhbjg-qMGtThVzqlrcgRPFcyXV9UIUQI-4T3U-5YNSjDktQ4gNN_230Yy9H0yoV0Rc6BLoDinXCXYjnL_1IQxdHN--mU9GexXYcoAK609Hg7uY9320ovHKNVcjQI19wmQjO3mAePgEWvm2ux8PT0jGAETXouLJlAtg"
-const url = 'http://localhost:8000';
+const token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3MjdiNmI0OTQwMmI5Y2Y5NWJlNGU4ZmQzOGFhN2U3YzExNjQ0YjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjEyOTk4NzQsImF1ZCI6Ijc3MjQzNDUxNjQ0LXNtODZudnIyNXEzbzUxZWlqbTNvNW00OGEwcjcyZmVkLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyNDE0MDY1NjcyOTI5MDE3OTE2IiwiZW1haWwiOiJwYXVsaW5hZ2FyY2lham92QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI3NzI0MzQ1MTY0NC1zbTg2bnZyMjVxM281MWVpam0zbzVtNDhhMHI3MmZlZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJwYXVsaW5hIG9jYW1wbyBnYXJjaWEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUl0YnZtbFVKWXM2Rm9hMldZVlBPNkRBQzRuZlQ2LWg5S0lSeGt4ckxvV0Y9czk2LWMiLCJnaXZlbl9uYW1lIjoicGF1bGluYSIsImZhbWlseV9uYW1lIjoib2NhbXBvIGdhcmNpYSIsImlhdCI6MTY2MTMwMDE3NCwiZXhwIjoxNjYxMzAzNzc0LCJqdGkiOiI0YmQxNGEyMjBmODI5YzhjNzViNjIxNDE2OGU0NDlhMDY4MzJmYzJkIn0.WTJR5J3bCIA6ea3UoUUxrZ6MoG_jIK_sn2uJnZc4EjHGGTAHNGvq851lxQhfgNvsp0CBdLUfeuDnFKCH5OjkffdiBpgvJF0wbJW81_wHwrN0yuDBXYJWI2UwHjTERyfWMkrr8pZVHrz10AhgQotPIuIQcsJNUb3kEJTZAWRQKWWO-ORmI-bGBRb277UcxGSMtiP1hT_RBTYMrfnaeu0uhiSy0Fy8XRz_rWnrA12dXt6lVRCFuyHE1Gx6RBcedf5g86P28hZ0HN8qnd-fxxqJIE6KQVgRQ1ibQJlvBo5O19uAIXZ84PaHOqzxmeTCAcMQMZyjmKOJzOD-n77_OLjy7w"
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 describe('Login con Google', () => {
     it('Login Con Google - Login exitoso', (done) => {
         chai.request(url)
-            .post('/api/google')
+            .post('/google')
             .send({
                 id_token: token
             })
@@ -22,7 +23,7 @@ describe('Login con Google', () => {
     })
     it('Login con Google - Token invalido ', (done) => {
         chai.request(url)
-            .post('/api/google')
+            .post('/google')
             .send({
                 id_token: "as" + token
             })

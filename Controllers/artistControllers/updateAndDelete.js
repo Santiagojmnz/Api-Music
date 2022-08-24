@@ -6,7 +6,7 @@ const fs = require('fs')
 
 function updateArtist(req, res) {
     try {
-    const params = req.body;
+        const params = req.body;
         if (params.name != null && params.name != '' && params.description != null && params.description != '') {
 
             Artist.findByIdAndUpdate({ _id: req.params.id }, params)
@@ -37,22 +37,21 @@ function deleteArtist(req, res) {
                     Album.find({ artist: req.params.id })
                         .then((albums) => {
                             albums.forEach((album) => {
-                                Song.find({album: album._id})
-                                .then((songs) => {
-                                    songs.forEach((delsong) => {
-                                        if (delsong.file) {
-                                            const path = path.join(__dirname, '../../Songs/', delsong.file);
-                                            const exists = fs.existsSync(path);
-                                            if (exists) {
-                                                fs.unlinkSync('Songs/' + delsong.file)
+                                Song.find({ album: album._id })
+                                    .then((songs) => {
+                                        songs.forEach((delsong) => {
+                                            if (delsong.file) {
+                                                const path = path.join(__dirname, '../../Songs/', delsong.file);
+                                                const exists = fs.existsSync(path);
+                                                if (exists) {
+                                                    fs.unlinkSync('Songs/' + delsong.file)
+                                                }
                                             }
-                                        }
-                                        
+
+                                        })
+                                        Song.deleteMany({ album: album._id })
+                                            .then((deletedSongs) => {})
                                     })
-                                    Song.deleteMany({ album: album._id })
-                                    .then((deletedSongs) => {
-                                    })
-                                })
 
                             })
                             Album.deleteMany({ artist: req.params.id })
@@ -62,7 +61,7 @@ function deleteArtist(req, res) {
                                     } else {
                                         return res.status(500).send({ message: 'Problemas al eliminar al artista' });
                                     }
-                            })
+                                })
                         })
 
                 } else {
