@@ -3,7 +3,8 @@ let chaiHTTP = require("chai-http");
 const expect = require("chai").expect;
 
 chai.use(chaiHTTP);
-const url = "http://localhost:8000/api";
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 const Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 
 describe("Pruebas a Playlist", () => {
@@ -13,7 +14,7 @@ describe("Pruebas a Playlist", () => {
                 .post('/new-playlist')
                 .set('Authorization', `${Authorization}`)
                 .send({
-                    "name": "nueva lista345",
+                    "name": "Musica del momento",
                     "user": "62bcbeb6f264341814de5619"
                 })
                 .end(
@@ -172,7 +173,7 @@ describe("Pruebas a Playlist", () => {
     describe("Eliminar playlist ", () => {
         it("Debe eliminar la Playlist", (done) => {
             chai.request(url)
-                .delete('/delete-playlist/62ff190c2ebedf23b33c07b6')
+                .delete('/delete-playlist/62ff20d7f2ae4e0de5ee29ce')
                 .set('Authorization', `${Authorization}`)
                 .end(
                     function(err, res) {
@@ -291,6 +292,6 @@ describe("Pruebas a Playlist", () => {
                     }
                 )
         })
-    });;
+    });
 
 });

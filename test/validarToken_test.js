@@ -2,13 +2,14 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
-const token = "$2b$10$5QwdE.img-wliJTacZCsLesJYGphQ7u4lMV1CYoEZLTOqtpU8fC0W";
+const token = "$2b$10$vE9rXIESwxPonAcrjuE9XuQr97U0Q7bpBqZv7q-E8r6.LmRozaS5O";
 
-const url = 'http://localhost:8000';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 describe('Validar token', () => {
     it('Token Valido -IsValid:true', (done) => {
         chai.request(url)
-            .post('/api/validate-token')
+            .post('/validate-token')
             .send({
                 token: token
             })
@@ -22,7 +23,7 @@ describe('Validar token', () => {
     })
     it('Token invalido o expirado', (done) => {
         chai.request(url)
-            .post('/api/validate-token')
+            .post('/validate-token')
             .send({
                 token: token + "sd"
             })

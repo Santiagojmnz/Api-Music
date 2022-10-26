@@ -2,8 +2,9 @@ const PlayList = require('../../Models/playList');
 
 const playListRegister = async(req, res) => {
     const params = req.body;
+    params.user = req.user._id;
     try {
-        if (params.name != null && params.user != null && params.name != "" && params.user != "") {
+        if (params.name != null && params.name != "") {
 
             const playList = await new PlayList(params);
             PlayList.find({ user: playList.user, name: playList.name })

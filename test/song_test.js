@@ -3,7 +3,8 @@ let chaiHTTP = require("chai-http");
 const expect = require("chai").expect;
 
 chai.use(chaiHTTP);
-const url = "http://localhost:8000/api";
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 const Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 
 describe("Pruebas a Song (almacenar canción)", () => {
@@ -15,9 +16,9 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .field({
-                    "name": "prelude5",
-                    "number": "137",
-                    "album": "62c7b30143432840ef614684"
+                    "name": "Sin tu amor",
+                    "number": "Carin Leon",
+                    "album": "62c50f61877c69d1bee73ebb"
                 })
                 .attach("file", "/Users/Ssnjm/Downloads/Marc Anthony - Flor Pálida (Official Video).mp3")
                 .end(
@@ -106,20 +107,23 @@ describe("Pruebas a Song (almacenar canción)", () => {
     describe("Actualizar canción", () => {
         it("Debe actualizar la canción sin archivo", (done) => {
             chai.request(url)
-                .put('/update-song/62cdeda3c33785ba103b7e83')
+                .put('/update-song/62ce3e31390c6ca533502830')
                 .set('Authorization', `${Authorization}`)
-                .send({
-                    "name": "nekozila",
+                .field('Content-Type', 'multipart/form-data')
+                .field({
+                    "name": "flor palida",
                     "number": "1",
                     "album": "62c7b30143432840ef614684"
                 })
-                .end(
-                    function(err, res) {
-                        expect(res).to.have.status(200);
-                        expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
-                        done();
-                    }
-                )
+
+
+            .end(
+                function(err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.have.property('message').to.be.equal('Canción actualizada');
+                    done();
+                }
+            )
         })
         it("Debe actualizar la canción con archivo", (done) => {
             chai.request(url)
@@ -167,7 +171,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 })
                 .end(
                     function(err, res) {
-                        expect(res).to.have.status(500);
+                        expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
                         done();
                     }
@@ -183,7 +187,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
                 })
                 .end(
                     function(err, res) {
-                        expect(res).to.have.status(500);
+                        expect(res).to.have.status(400);
                         expect(res.body).to.have.property('message').to.be.equal('Por favor ingrese los campos obligatorios (*) faltantes');
                         done();
                     }
@@ -229,7 +233,7 @@ describe("Pruebas a Song (almacenar canción)", () => {
     describe("Eliminar canción ", () => {
         it("Debe eliminar la canción", (done) => {
             chai.request(url)
-                .delete('/delete-song/62fefdae2ebedf23b33c0754')
+                .delete('/delete-song/62ff20d7f2ae4e0de5ee29ef')
                 .set('Authorization', `${Authorization}`)
                 .end(
                     function(err, res) {

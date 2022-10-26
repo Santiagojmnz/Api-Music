@@ -3,7 +3,8 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
-const url = 'http://localhost:8000/api';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 describe('Albums', () => {
@@ -13,8 +14,8 @@ describe('Albums', () => {
                 .post('/new-album')
                 .set({ Authorization: token })
                 .send({
-                    title: "30909sd",
-                    description: "Es el cuarto albúm de estudio de la cantautora britanica Adele",
+                    title: "Espejo",
+                    description: "Es el cuarto albúm de estudio del rapero ZPU",
                     year: 2015,
                     artist: "62c51183877c69d1bee73ee5"
                 })

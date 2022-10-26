@@ -3,14 +3,15 @@ const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const url = 'http://localhost:8000';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 const tokenExpire = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgyMTY4LCJleHAiOjE2NjAyODIxNjh9.LgmUtjEkkcYTHmPd9hGqF7VKQzpuFPr4zUxpabCRqM0';
 
 describe('Suspender cuenta', () => {
     it('Debe suspender la cuenta del usuario', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f7b8625143ba94556db039')
+            .get('/suspend-account/62f7b8625143ba94556db039')
             .set({ 'Authorization': token })
             .end((error, response) => {
                 expect(response).to.have.status(200);
@@ -21,7 +22,7 @@ describe('Suspender cuenta', () => {
     })
     it('No debe suspender la cuenta del usuario - Cuenta no encontrada', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f6977618f15f6c5c9a154b')
+            .get('/suspend-account/62f6977618f15f6c5c9a154b')
             .set({ 'Authorization': token })
             .end((error, response) => {
                 expect(response).to.have.status(404);
@@ -32,7 +33,7 @@ describe('Suspender cuenta', () => {
     })
     it('No debe suspender la cuenta del usuario - MonngoId inválido', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f6977618f15f6c5c9a154b0')
+            .get('/suspend-account/62f6977618f15f6c5c9a154b0')
             .set({ 'Authorization': token })
             .end((error, response) => {
                 expect(response).to.have.status(400);
@@ -43,7 +44,7 @@ describe('Suspender cuenta', () => {
     })
     it('No debe suspender la cuenta del usuario  - Token no válido', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f6977618f15f6c5c9a154a')
+            .get('/suspend-account/62f6977618f15f6c5c9a154a')
             .set({ 'Authorization': token + "klñ" })
             .end((error, response) => {
                 expect(response).to.have.status(401);
@@ -54,7 +55,7 @@ describe('Suspender cuenta', () => {
     })
     it('No debe suspender la cuenta del usuario  - Token expirado', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f6977618f15f6c5c9a154a')
+            .get('/suspend-account/62f6977618f15f6c5c9a154a')
             .set({ 'Authorization': tokenExpire })
             .end((error, response) => {
                 expect(response).to.have.status(401);
@@ -65,7 +66,7 @@ describe('Suspender cuenta', () => {
     })
     it('No debe suspender la cuenta del usuario  - Sin cabecera de autenticación', (done) => {
         chai.request(url)
-            .get('/api/suspend-account/62f6977618f15f6c5c9a154a')
+            .get('/suspend-account/62f6977618f15f6c5c9a154a')
             .set({})
             .end((error, response) => {
                 expect(response).to.have.status(401);

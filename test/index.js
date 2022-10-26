@@ -1,6 +1,7 @@
 //importacion en el eorden que 
 //queremos se ejecuten las pruebas
 
+
 require('./singup_test')
 require('./login_test');
 require('./getUser_test');
@@ -10,9 +11,7 @@ require('./deleteUser_test');
 require('./verifyAccount_test');
 require('./recoveryPassword_test');
 require('./validarToken_test');
-
 require('./updatePassword_test');
-
 require('./suspendAcount_test');
 require('./updatePasswordById_test');
 require('./loginGoogle_test');
@@ -31,9 +30,8 @@ require('./getArtistId_test');
 require('./getArtistPage_test');
 require('./deleteArtist_test');
 require('./registerListSong_test');
-
 require('./deleteListSong_test');
 //Franco
 require('./playlist_test');
-require('./song_test');
 require('./uploadImage_test');
+require('./song_test');

@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
-//CORS cabecera
+
 
 //Carga de archivos
 app.use(fileUpload({
@@ -28,7 +28,7 @@ app.use(fileUpload({
     createParentPath: true
 }));
 
-
+//CORS cabecera
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization,X-API-KEY,Origin,X-Requested-With,Content-Type,Accept,Access-Control-Allow-Request-Method');

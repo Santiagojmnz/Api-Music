@@ -1,16 +1,17 @@
-let chai = require("chai");
-let chaiHTTP = require("chai-http");
-const expect = require("chai").expect;
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const expect = chai.expect;
+chai.use(chaiHttp);
 
-chai.use(chaiHTTP);
-const url = "http://localhost:8000/api/";
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 const Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 
 describe("Pruebas a uploadImage", () => {
     describe("Subir imagen de album", () => {
         it("Debe almacenar la imagen correctamente", (done) => {
             chai.request(url)
-                .put('albums/62ccf7258350a09d22af737d')
+                .put('/albums/62ccf7258350a09d22af737d')
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
@@ -24,7 +25,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por falta de credenciales", (done) => {
             chai.request(url)
-                .put('albums/62ccf7258350a09d22af737d')
+                .put('/albums/62ccf7258350a09d22af737d')
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
                 .end(
@@ -37,7 +38,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por inexistencia de álbum", (done) => {
             chai.request(url)
-                .put('albums/62ccf7258350a09d22af73dd')
+                .put('/albums/62ccf7258350a09d22af73dd')
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
@@ -51,7 +52,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por inexistencia de colección", (done) => {
             chai.request(url)
-                .put('albumes/62ccf7258350a09d22af737d')
+                .put('/albumes/62ccf7258350a09d22af737d')
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
@@ -68,7 +69,7 @@ describe("Pruebas a uploadImage", () => {
     describe("Subir imagen de un usuario", () => {
         it("Debe almacenar la imagen", (done) => {
             chai.request(url)
-                .put('users/62bcbeb6f264341814de5619')
+                .put('/users/62bcbeb6f264341814de5619')
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
@@ -82,7 +83,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por falta de credenciales", (done) => {
             chai.request(url)
-                .put('users/62ccf7258350a09d22af737d')
+                .put('/users/62ccf7258350a09d22af737d')
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
                 .end(
@@ -95,7 +96,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por inexistencia de usuario", (done) => {
             chai.request(url)
-                .put('users/62ccf7258350a09d22af73dd')
+                .put('/users/62ccf7258350a09d22af73dd')
                 .set('Authorization', `${Authorization}`)
                 .field('Content-Type', 'multipart/form-data')
                 .attach('file', "/Users/Ssnjm/Downloads/legendaddy_388189_20220408215621.jpg")
@@ -112,7 +113,7 @@ describe("Pruebas a uploadImage", () => {
     describe("Obtener imagen", () => {
         it("Debe obtener la imagen", (done) => {
             chai.request(url)
-                .get('image-albums/62ccf7258350a09d22af737d')
+                .get('/image-albums/62ccf7258350a09d22af737d')
                 .set('Authorization', `${Authorization}`)
                 .end(
                     function(err, res) {
@@ -123,7 +124,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la petición por falta de credenciales", (done) => {
             chai.request(url)
-                .get('image-albums/62ccf7258350a09d22af737d')
+                .get('/image-albums/62ccf7258350a09d22af737d')
                 .end(
                     function(err, res) {
                         expect(res).to.have.status(401);
@@ -134,7 +135,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por inexistencia", (done) => {
             chai.request(url)
-                .get('image-albums/62ccf7258350a09d22af73dd')
+                .get('/image-albums/62ccf7258350a09d22af73dd')
                 .set('Authorization', `${Authorization}`)
                 .end(
                     function(err, res) {
@@ -146,7 +147,7 @@ describe("Pruebas a uploadImage", () => {
         })
         it("Debe rechazar la imagen por id erróneo", (done) => {
             chai.request(url)
-                .get('image-albums/62ccf7258350a0f73dd')
+                .get('/image-albums/62ccf7258350a0f73dd')
                 .set('Authorization', `${Authorization}`)
                 .end(
                     function(err, res) {

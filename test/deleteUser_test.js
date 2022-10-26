@@ -2,8 +2,8 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
-
-const url = 'http://localhost:8000';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 const tokenUser = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJmNWUwN2ZiYWE4YmEwNDc3N2E3MjE5IiwiaWF0IjoxNjYwMjgxMDEyLCJleHAiOjE2NjI4NzMwMTJ9.f6g5xzGlBgWLPJmGSIvXL-NqOpD3R-ezCuLsfX_xDUw';
 const tokenAdmin = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 const tokenExpire = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgyMTY4LCJleHAiOjE2NjAyODIxNjh9.LgmUtjEkkcYTHmPd9hGqF7VKQzpuFPr4zUxpabCRqM0';
@@ -11,7 +11,7 @@ const tokenExpire = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNT
 describe('Eliminar usuario', () => {
     it('Debe eliminar al usuario', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62ff12f22a50c48c005d6012')
+            .delete('/delete-user/62ff0f7b750145197a2d0d60')
             .set({ 'Authorization': tokenAdmin })
             .end((error, response) => {
                 expect(response).to.have.status(200);
@@ -22,7 +22,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario - Cuenta no encontrada', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154b')
+            .delete('/delete-user/62f6977618f15f6c5c9a154b')
             .set({ 'Authorization': tokenAdmin })
             .end((error, response) => {
                 expect(response).to.have.status(404);
@@ -33,7 +33,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario - MonngoId inválido', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154b0')
+            .delete('/delete-user/62f6977618f15f6c5c9a154b0')
             .set({ 'Authorization': tokenAdmin })
             .end((error, response) => {
                 expect(response).to.have.status(400);
@@ -44,7 +44,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario  - Token no válido', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154a')
+            .delete('/delete-user/62f6977618f15f6c5c9a154a')
             .set({ 'Authorization': tokenAdmin + "jk" })
             .end((error, response) => {
                 expect(response).to.have.status(401);
@@ -55,7 +55,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario  - Token expirado', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154a')
+            .delete('/delete-user/62f6977618f15f6c5c9a154a')
             .set({ 'Authorization': tokenExpire })
             .end((error, response) => {
                 expect(response).to.have.status(401);
@@ -66,7 +66,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario  - Sin permisos suficientes rol: user', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154a')
+            .delete('/delete-user/62f6977618f15f6c5c9a154a')
             .set({ 'Authorization': tokenUser })
             .end((error, response) => {
                 expect(response).to.have.status(403);
@@ -77,7 +77,7 @@ describe('Eliminar usuario', () => {
     })
     it('No debe eliminar al usuario  - Sin cabecera de autenticación', (done) => {
         chai.request(url)
-            .delete('/api/delete-user/62f6977618f15f6c5c9a154a')
+            .delete('/delete-user/62f6977618f15f6c5c9a154a')
             .set({})
             .end((error, response) => {
                 expect(response).to.have.status(401);

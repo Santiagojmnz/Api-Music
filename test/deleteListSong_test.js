@@ -3,14 +3,15 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
-const url = 'http://localhost:8000/api';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJlNzEzNTc0MmZmZDk1YjlhNjFjNTU4IiwiaWF0IjoxNjYwMjgxOTI3LCJleHAiOjE2NjI4NzM5Mjd9.BsnFN462-fj3YG1dTTHOWwzpW-xACjDAVDRnwc4XLGs';
 describe('listSong', () => {
     describe('Eliminar canción listada: ', () => {
         it('Eliminar canción listada con usuario autenticado', (done) => {
             chai.request(url)
-                .delete('/quit-song/62ff18092ebedf23b33c07b3')
+                .delete('/quit-song/62feff912cd542b5a3c18cf4')
                 .set({ Authorization: token })
                 .end(function(err, res) {
                     expect(res).to.have.status(200)

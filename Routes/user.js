@@ -3,7 +3,7 @@ const express = require('express');
 const api = express.Router();
 const userController = require('../Controllers/userControllers/index');
 const { check } = require('express-validator');
-const { validarCampos, isEmail, isMongoId } = require('../middlewares/validar-campos');
+const { validarCampos, isEmail, isMongoId } = require('../Middlewares/validar-campos');
 const { ensureAuth } = require('../Middlewares/authenticated');
 const { isAdmin } = require('../Middlewares/isAdmin');
 

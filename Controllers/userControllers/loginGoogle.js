@@ -1,7 +1,7 @@
 const { response } = require('express');
 const User = require('../../Models/user');
 
-const { googleVerify } = require('../../helpers/google-verify');
+const { googleVerify } = require('../../Helpers/google-verify');
 const { createToken } = require('../../Services/jwt');
 
 

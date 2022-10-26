@@ -3,16 +3,17 @@ const chaiHttp = require('chai-http')
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const url = 'http://localhost:8000';
+const dotenv = require('dotenv').config();
+const url = process.env.URL;
 
 describe('Registro de usuario', () => { //Se definen bloques de pruebas
     it('Debe registrar un nuevo usuario', (done) => { //Caso de prueba o esenario
         chai.request(url) //Ruta base
-            .post('/api/new-user') //Enpoint y metodo
+            .post('/new-user') //Enpoint y metodo
             .send({ //Send informacion a enviar
-                name: 'Juan25',
-                surname: 'Dominguez1',
-                email: "sanjimenzasde2wee6@gmail.com",
+                name: 'Francisco',
+                surname: 'Neri',
+                email: "francisco_neri@gmail.com",
                 password: 'abc'
 
             })
@@ -25,7 +26,7 @@ describe('Registro de usuario', () => { //Se definen bloques de pruebas
     })
     it('Debe rechazar el registro - usuario existente', (done) => {
         chai.request(url)
-            .post('/api/new-user')
+            .post('/new-user')
             .send({
                 name: 'Santiago',
                 surname: 'Jimenez',
@@ -43,7 +44,7 @@ describe('Registro de usuario', () => { //Se definen bloques de pruebas
     })
     it('Debe rechazar el registro de usuario - información faltante', (done) => {
         chai.request(url)
-            .post('/api/new-user')
+            .post('/new-user')
             .send({
                 name: '',
                 surname: 'Dominguez',
@@ -60,7 +61,7 @@ describe('Registro de usuario', () => { //Se definen bloques de pruebas
     })
     it('Debe rechazar el registro de usuario - Email invalido', (done) => {
         chai.request(url)
-            .post('/api/new-user')
+            .post('/new-user')
             .send({
                 name: 'Juan',
                 surname: 'Dominguez',
