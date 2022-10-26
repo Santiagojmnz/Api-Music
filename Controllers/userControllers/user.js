@@ -89,9 +89,16 @@ function findUserId(req, res) {
 function updateUser(req, res) {
     try {
         const params = req.body;
-        if (params.name != "" && params.surname != "" && params.email != "" && params.password != "" && params.name != null && params.surname != null && params.email != null && params.password != null) {
-            const hash = bcrypt.hashSync(params.password, 10);
-            params.password = hash;
+
+        if (params.name != "" && params.surname != "" && params.email != "" && params.name != null && params.surname != null && params.email != null) {
+
+            if (params.password) {
+                const hash = bcrypt.hashSync(params.password, 10);
+                params.password = hash;
+            } else {
+                delete params.password;
+            }
+
             User.find({ _id: req.params.id }).then((user) => {
 
                 if (user.length) {

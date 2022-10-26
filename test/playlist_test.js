@@ -292,6 +292,6 @@ describe("Pruebas a Playlist", () => {
                     }
                 )
         })
-    });;
+    });
 
 });

@@ -3,62 +3,63 @@ const Artist = require('../../Models/artist');
 
 
 function findArtist(req, res) {
-    try{
+    try {
         Artist.find()
-        .then(artist => {
-            if (artist) {
-                res.status(200).send({artist})
-            } else {
-                res.status(500).send({ message: 'No se pudieron cargar los artistas' })
-            }
-        })
-    }catch (error) {
+            .then(artists => {
+                if (artists) {
+                    res.status(200).send({ artist })
+                } else {
+                    res.status(404).send({ message: 'Sin artistas' })
+                }
+            })
+    } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición: ' + error });
 
     }
-   
+
 };
 
 function artistPaginate(req, res) {
-    const {page} =req.params;
-    try{
+    const { page, items } = req.params;
+    try {
         const myCustomLabels = {
             limit: 'false',
+            totalDocs: 'false',
+            totalPages: 'false',
             pagingCounter: 'false',
             hasPrevPage: 'false',
             hasNextPage: 'false',
-            prevPage: 'false',
-            nextPage: 'false',
-          };
-          const options = {
+        };
+        const options = {
             page: page || 1,
+            limit: items || 10,
             customLabels: myCustomLabels,
-          };
+        };
         Artist.paginate({}, options)
-            .then(artist => {
-                if (artist) {
-                    res.status(200).send({artist})
+            .then(artists => {
+                if (artists) {
+                    res.status(200).send({ artists })
                 } else {
-                    res.status(500).send({ message: 'No se pudieron cargar los artistas' })
+                    res.status(500).send({ message: 'Sin artistas' })
                 }
             })
-    }catch (error) {
+    } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
-    
+
 };
 
 
 function findArtistId(req, res) {
     try {
-        Artist.findOne({ _id: req.params.id})
-        .then((artist)=>{
-            if(artist){
-                res.status(200).send({artist})
-            }else{
-                res.status(404).send({ message: 'No se encontró el álbum' })
-            }
-        })
+        Artist.findById({ _id: req.params.id })
+            .then((artist) => {
+                if (artist) {
+                    res.status(200).send({ artist })
+                } else {
+                    res.status(404).send({ message: 'No se encontró el artista' })
+                }
+            })
 
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición: ' + error });
