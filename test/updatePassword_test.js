@@ -5,7 +5,7 @@ chai.use(chaiHttp);
 
 const dotenv = require('dotenv').config();
 const url = process.env.URL;
-const token = "$2b$10$mmVVSX4KR9uvJibW6W6osOL36Ujcq8sxvNIm.2tCf.KoQmDVdO362";
+const token = "$2b$10$vE9rXIESwxPonAcrjuE9XuQr97U0Q7bpBqZv7q-E8r6.LmRozaS5O";
 
 describe('Guardar nueva contraseña', () => {
 

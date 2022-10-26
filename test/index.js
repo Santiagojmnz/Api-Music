@@ -1,5 +1,7 @@
 //importacion en el eorden que 
 //queremos se ejecuten las pruebas
+
+
 require('./singup_test')
 require('./login_test');
 require('./getUser_test');
@@ -31,5 +33,5 @@ require('./registerListSong_test');
 require('./deleteListSong_test');
 //Franco
 require('./playlist_test');
-require('./song_test');
 require('./uploadImage_test');
+require('./song_test');
