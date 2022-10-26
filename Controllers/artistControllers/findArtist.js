@@ -7,7 +7,7 @@ function findArtist(req, res) {
         Artist.find()
             .then(artists => {
                 if (artists) {
-                    res.status(200).send({ artist })
+                    res.status(200).send({ artists })
                 } else {
                     res.status(404).send({ message: 'Sin artistas' })
                 }
