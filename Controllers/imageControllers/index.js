@@ -104,9 +104,10 @@ const getImage = async(req, res) => {
                 const user = await User.findById(id);
                 if (user) {
                     if (user.image) {
-                        const pathImage = path.join(__dirname, '../..Images/', user.image);
+                        const pathImage = path.join(__dirname, '../../Images/', user.image);
                         const exists = await fs.existsSync(pathImage);
-                        if (exists && user.image.length) {
+
+                        if (exists) {
                             return res.sendFile(pathImage);
                         }
                     }
@@ -124,7 +125,7 @@ const getImage = async(req, res) => {
                     if (artist.image) {
                         const pathImage = path.join(__dirname, '../../Images/', artist.image)
                         const exists = await fs.existsSync(pathImage);
-                        if (exists && artist.image.length) {
+                        if (exists) {
                             return res.sendFile(pathImage);
                         }
                     }
@@ -142,7 +143,7 @@ const getImage = async(req, res) => {
                     if (album.image) {
                         const pathImage = path.join(__dirname, '../../Images/', album.image)
                         const exists = await fs.existsSync(pathImage);
-                        if (exists && album.image.length) {
+                        if (exists) {
                             return res.sendFile(pathImage);
                         }
                     }
