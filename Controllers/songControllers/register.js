@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const songRegister = async(req, res) => {
     try {
-        const validExtensions = ['mp3', 'm4a', 'mpeg']
+        const validExtensions = ['mp3', 'm4a']
         const binder = 'Songs';
         const params = req.body;
         if (params.number != null && params.name != null && params.album != null && params.number != "" && params.name != "" && params.album != "") {
