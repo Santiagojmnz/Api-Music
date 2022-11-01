@@ -1,7 +1,6 @@
 'use strict'
 const Song = require('../../Models/song');
 const path = require('path');
-const mediaserver = require('mediaserver');
 const fs = require('fs');
 
 function findSong(req, res) {
@@ -21,25 +20,25 @@ function findSong(req, res) {
 };
 
 function getSongFile(req, res) {
-    const { id } = req.params;
-    console.log(id)
+    const { file } = req.params;
     try {
-        Song.findById(id)
+        Song.findOne({ file: file })
             .then(async(song) => {
-                const pathFile = path.join(__dirname, '../../Songs', song.file)
+                const pathFile = path.join(__dirname, '../../Songs', file)
                 const exists = await fs.existsSync(pathFile);
                 if (exists) {
-                    return mediaserver.pipe(req, res, pathFile);
+                    res.sendFile(pathFile)
                 } else {
-                    return res.status(404).send({ message: 'Sin archivo de audio' })
+                    res.status(404).send({ message: 'No se encontró la canción' })
                 }
             })
 
     } catch (error) {
-        return res.status(500).send({ message: 'Error al procesar la petición: ' + error });
+        res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
 
 };
+
 
 function songsPaginate(req, res) {
     const { page } = req.params;
