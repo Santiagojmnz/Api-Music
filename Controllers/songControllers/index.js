@@ -5,9 +5,10 @@ const {
     deleteSong
 } = require("./updateAndDelete");
 
-const { findSong, 
-    findSongId, 
-    songsPaginate 
+const {
+    findSong,
+    getSongFile,
+    songsPaginate
 } = require('../songControllers/findSong');
 
 
@@ -16,6 +17,6 @@ module.exports = {
     updateSong,
     deleteSong,
     findSong,
-    findSongId,
+    getSongFile,
     songsPaginate
 }
