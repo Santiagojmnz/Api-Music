@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const dotenv =require('dotenv').config();
+const dotenv = require('dotenv').config();
 const config = process.env;
 exports.passwordEmail = async(name, surname, email, token) => {
     try {
@@ -15,7 +15,7 @@ exports.passwordEmail = async(name, surname, email, token) => {
 
         let mensaje = `Hola, ${name} ${surname} <br>`;
         mensaje += 'Has solicitado restaurar tu contraseña, ';
-        mensaje += `<a href="${config.RUTA}${token}">Haz clic aquí</a><br>`;
+        mensaje += `<a href="${config.RUTA_RESET}${token}">Haz clic aquí</a><br>`;
         mensaje += 'El enlace es válido sólo por una hora desde su envío.';
 
         let info = await transporter.sendMail({
