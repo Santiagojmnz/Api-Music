@@ -22,7 +22,7 @@ const AlbumSchema = new Schema({
     image: {
         type: String
     },
-    genero: {
+    gender: {
         type: String,
         trim: true,
         require
