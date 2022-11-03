@@ -43,6 +43,49 @@ const search = async(req, res) => {
     }
 
 }
+
+const directedSearch = async(req, res) => {
+    const { query, collection } = req.params;
+    const regEx = new RegExp(query, 'i');
+    const results = [];
+
+    try {
+        if (query == 'undefined') {
+            results = [];
+        } else {
+            if (query) {
+                if (collection == 'artists') {
+                    const artists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
+                    results.push({ Artists: artists });
+                }
+                if (collection == 'albums') {
+                    const albums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
+                    results.push({ Albums: albums })
+                }
+                if (collection == 'songs') {
+                    const songs = await Song.find({ name: regEx });
+                    results.push({ Songs: songs })
+                }
+
+
+            }
+        }
+        if (results.length) {
+            return res.status(200).send({ results });
+        } else {
+            return res.status(404).send({ message: 'Sin resultados', results });
+        }
+
+
+
+
+
+    } catch (error) {
+        return res.status(500).send({ message: 'Error al procesar la petición ' + error });
+    }
+
+}
 module.exports = {
-    search
+    search,
+    directedSearch
 }

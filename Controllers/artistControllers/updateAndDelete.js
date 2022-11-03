@@ -3,6 +3,10 @@ const Artist = require('../../Models/artist');
 const Album = require('../../Models/album');
 const Song = require('../../Models/song');
 const fs = require('fs')
+const dotenv = require('dotenv').config();
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 function updateArtist(req, res) {
     try {
@@ -39,13 +43,13 @@ function deleteArtist(req, res) {
                             albums.forEach((album) => {
                                 Song.find({ album: album._id })
                                     .then((songs) => {
-                                        songs.forEach((delsong) => {
+                                        songs.forEach(async(delsong) => {
                                             if (delsong.file) {
-                                                const path = path.join(__dirname, '../../Songs/', delsong.file);
-                                                const exists = fs.existsSync(path);
-                                                if (exists) {
-                                                    fs.unlinkSync('Songs/' + delsong.file)
-                                                }
+                                                const fileSong = delsong.file.split('/');
+                                                const nombre = fileSong[fileSong.length - 1];
+                                                const [SongId] = nombre.split('.');
+                                                await cloudinary.uploader.destroy(SongId, { resource_type: "video" });
+
                                             }
 
                                         })
