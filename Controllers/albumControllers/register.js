@@ -6,7 +6,7 @@ const albumRegister = async(req, res) => {
     try {
         const params = req.body;
 
-        if (params.title != null && params.genero != null && params.description != null && params.year != null && params.artist != null && params.genero != null) {
+        if (params.title != null && params.genero != null && params.description != null && params.year != null && params.artist != null) {
             if (isNaN(params.year)) {
                 return res.status(500).send({ message: 'El año ingresado no es válido: ' + params.year })
             } else {
