@@ -22,6 +22,12 @@ const AlbumSchema = new Schema({
     image: {
         type: String
     },
+    genero: {
+        type: String,
+        trim: true,
+        require
+
+    },
     artist: {
         type: Schema.ObjectId,
         ref: 'Artist'
