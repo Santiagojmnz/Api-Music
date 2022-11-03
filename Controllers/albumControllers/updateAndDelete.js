@@ -9,7 +9,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 function updateAlbum(req, res) {
     try {
         const params = req.body;
-        if (params.title != null && params.title != '' && params.description != null && params.description != '' && params.year != null && params.year != '' && params.artist != null && params.artist != '') {
+        if (params.title != null && params.title != '' && params.gender != null && params.gender != '' && params.description != null && params.description != '' && params.year != null && params.year != '' && params.artist != null && params.artist != '') {
 
             Album.find({ title: params.title, artist: req.params.artist })
                 .then((exists) => {
