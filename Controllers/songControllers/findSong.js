@@ -1,7 +1,5 @@
 'use strict'
 const Song = require('../../Models/song');
-const path = require('path');
-const fs = require('fs');
 
 function findSong(req, res) {
     try {
@@ -19,23 +17,29 @@ function findSong(req, res) {
 
 };
 
-function getSongFile(req, res) {
-    const { file } = req.params;
+function getSongs(req, res) {
+    const { id, collection } = req.params;
+    var find;
     try {
-        Song.findOne({ file: file })
-            .then(async(song) => {
-                const pathFile = path.join(__dirname, '../../Songs', file)
-                const exists = await fs.existsSync(pathFile);
-                if (exists) {
-                    res.sendFile(pathFile)
-                } else {
-                    res.status(404).send({ message: 'No se encontró la canción' })
-                }
-            })
+
+        if (collection == "albums") {
+            find = Song.find({ album: id }).sort('number')
+
+        } else {
+            find = Song.find({ artist: id }).sort('name')
+        }
+        find.then(songs => {
+            if (songs) {
+                res.status(200).send({ songs })
+            } else {
+                res.status(404).send({ message: 'Sin canciones' })
+            }
+        })
 
     } catch (error) {
         res.status(500).send({ message: 'Error al procesar la petición: ' + error });
     }
+
 
 };
 
@@ -73,6 +77,6 @@ function songsPaginate(req, res) {
 
 module.exports = {
     findSong,
-    getSongFile,
-    songsPaginate
+    songsPaginate,
+    getSongs
 }

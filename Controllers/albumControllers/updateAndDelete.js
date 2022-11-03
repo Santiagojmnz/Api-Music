@@ -1,11 +1,14 @@
 'use strict'
 const Album = require('../../Models/album');
 const Song = require('../../Models/song');
-const fs = require('fs')
+const dotenv = require('dotenv').config();
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 function updateAlbum(req, res) {
     try {
-    const params = req.body;
+        const params = req.body;
         if (params.title != null && params.title != '' && params.description != null && params.description != '' && params.year != null && params.year != '' && params.artist != null && params.artist != '') {
 
             Album.find({ title: params.title, artist: req.params.artist })
@@ -41,18 +44,17 @@ function deleteAlbum(req, res) {
             .then((album) => {
 
                 if (album) {
-                    Song.find({album: req.params.id})
-                    .then((songs) => {
-                        songs.forEach((delsong) => {
-                            if (delsong.file) {
-                                const path = path.join(__dirname, '../../Songs/', delsong.file);
-                                const exists = fs.existsSync(path);
-                                if (exists) {
-                                    fs.unlinkSync('Songs/' + delsong.file)
+                    Song.find({ album: req.params.id })
+                        .then((songs) => {
+                            songs.forEach(async(delsong) => {
+                                if (delsong.file) {
+                                    const fileSong = delsong.file.split('/');
+                                    const nombre = fileSong[fileSong.length - 1];
+                                    const [SongId] = nombre.split('.');
+                                    await cloudinary.uploader.destroy(SongId, { resource_type: "video" });
                                 }
-                            }
+                            })
                         })
-                    })
                     Song.deleteMany({ album: req.params.id })
                         .then((deltedSg) => {
                             if (deltedSg) {
