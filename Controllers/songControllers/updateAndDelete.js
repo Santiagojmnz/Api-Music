@@ -1,14 +1,14 @@
 'use strict'
 const Song = require('../../Models/song');
-const fs = require('fs')
-const { fileUpload } = require('../../Helpers/fileUpload');
-const getMP3Duration = require('get-mp3-duration')
-const path = require('path');
+const dotenv = require('dotenv').config();
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config(process.env.CLOUDINARY_URL);
 async function updateSong(req, res) {
+    const { tempFilePath } = req.files.file;
+
     try {
         const params = req.body;
-        const binder = 'Songs';
-        const validExtensions = ['mp3', 'm4a', 'mpeg'];
         if (params.name != null && params.name != '' && params.number != null && params.number != '' && params.album != null && params.album != '') {
             const exists = await Song.find({ _id: { $ne: req.params.id }, name: params.name, album: params.album })
             if (exists.length) {
@@ -17,19 +17,21 @@ async function updateSong(req, res) {
             const song = await Song.findById({ _id: req.params.id })
             if (song) {
                 if (req.files !== null) {
-
-                    const pathSong = path.join(__dirname, '../../Songs/', song.file);
-                    const exists = fs.existsSync(pathSong);
-                    if (exists) {
-                        fs.unlinkSync(pathSong)
+                    const fileSong = song.file.split('/');
+                    const nombre = fileSong[fileSong.length - 1];
+                    const [SongId] = nombre.split('.');
+                    cloudinary.uploader.destroy(SongId, { resource_type: "video" });
+                    const { duration, secure_url } = await cloudinary.uploader.upload(tempFilePath, { resource_type: "video" });
+                    const time = (duration / 60000000000).toString();
+                    const minuts = time.substring(0, 1);
+                    const secondsM = time.substring(1, 4)
+                    const seconds = Math.round(parseFloat(secondsM * 60));
+                    if (seconds.toString().length > 1) {
+                        params.duration = minuts + ':' + seconds;
+                    } else {
+                        params.duration = minuts + ':0' + seconds;
                     }
-                    const file = req.files.file;
-                    const name = await fileUpload(req.files, validExtensions, binder, file);
-                    const buffer = await fs.readFileSync('Songs/' + name);
-                    const duration = getMP3Duration(buffer);
-                    const minutes = (duration / (1000 * 60)).toFixed(1);
-                    params.file = name;
-                    params.duration = minutes;
+                    params.file = secure_url;
                 } else {
                     params.file = song.file;
                 }
@@ -44,7 +46,7 @@ async function updateSong(req, res) {
             return res.status(400).send({ message: 'Por favor ingrese los campos obligatorios (*) faltantes' });
         }
     } catch (error) {
-        res.status(500).send({ message: 'Error al procesar la petición ' + error });
+        return res.status(500).send({ message: 'Error al procesar la petición ' + error });
     }
 };
 
@@ -54,11 +56,10 @@ async function deleteSong(req, res) {
         Song.findByIdAndDelete(req.params.id)
             .then((song) => {
                 if (song) {
-                    const pathSong = path.join(__dirname, '../../Songs/', song.file);
-                    const exists = fs.existsSync(pathSong);
-                    if (exists) {
-                        fs.unlinkSync(pathSong)
-                    }
+                    const fileSong = song.file.split('/');
+                    const nombre = fileSong[fileSong.length - 1];
+                    const [SongId] = nombre.split('.');
+                    cloudinary.uploader.destroy(SongId, { resource_type: "video" });
                     return res.status(200).send({ message: 'Canción eliminada' });
                 } else {
                     return res.status(404).send({ message: 'Canción no encontrada' });

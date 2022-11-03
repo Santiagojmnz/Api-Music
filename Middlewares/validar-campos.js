@@ -23,14 +23,59 @@ const isMongoId = (req, res, next) => {
         return res.status(400).send({ message: 'MonngoId inválido' });
     }
     next()
-
-
 }
 
+const isValidImage = (req, res, next) => {
+    const validExtensions = ['jpg', 'png', 'jpeg'];
+    const { name } = req.files.file;
+    const split = name.split('.');
+    const extension = split[split.length - 1];
+    if (!validExtensions.includes(extension)) {
+        return res.status(400).send({ message: `Extensión inválida ${extension}, sólo se permiten archivos: jpg, png y jpeg` });
+
+    }
+    next();
+}
+const isValidSong = (req, res, next) => {
+    const validExtensions = ['mp3', 'm4a'];
+    if (req.files) {
+        const { name } = req.files.file;
+        const split = name.split('.');
+        const extension = split[split.length - 1];
+        if (!validExtensions.includes(extension)) {
+            return res.status(400).send({ message: `Extensión inválida ${extension}, sólo se permiten archivos: mp3 y m4a` });
+
+        }
+    }
+
+    next();
+}
+const isValidCollection = (req, res, next) => {
+    const validCollection = ['albums', 'artists'];
+    const { collection } = req.params;
+    if (!validCollection.includes(collection)) {
+        return res.status(400).send({ message: `Colección inválida: ${collection}, utiliza: albums o artists` });
+
+    }
+    next();
+}
+const isValidCollectionSearch = (req, res, next) => {
+    const validCollection = ['albums', 'artists', 'songs'];
+    const { collection } = req.params;
+    if (!validCollection.includes(collection)) {
+        return res.status(400).send({ message: `Colección inválida: ${collection}, utiliza: albums, artists o songs` });
+
+    }
+    next();
+}
 
 
 module.exports = {
     validarCampos,
     isEmail,
-    isMongoId
+    isMongoId,
+    isValidImage,
+    isValidSong,
+    isValidCollection,
+    isValidCollectionSearch
 }
