@@ -8,7 +8,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 const songRegister = async(req, res) => {
     const { tempFilePath } = req.files.file;
     const params = req.body;
-
+    console.log(tempFilePath)
     try {
 
         if (params.number != null && params.name != null && params.album != null && params.artist != null && params.number != "" && params.name != "" && params.album != "" && params.artist != "") {
@@ -33,11 +33,12 @@ const songRegister = async(req, res) => {
                 const secondsM = time.substring(1, 4)
                 const seconds = parseFloat(secondsM * 60);
                 if (seconds.toString().length > 1) {
-                    song.duration = minuts + ':' + seconds;
+                    const [second] = seconds.toString().split('.');
+
+                    song.duration = minuts + ':' + second;
                 } else {
                     song.duration = minuts + ':0' + seconds;
                 }
-                console.log();
                 song.file = secure_url;
                 song.save();
                 return res.status(200).send({ message: 'Canción registrada' })

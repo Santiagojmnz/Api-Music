@@ -27,7 +27,8 @@ async function updateSong(req, res) {
                     const secondsM = time.substring(1, 4)
                     const seconds = Math.round(parseFloat(secondsM * 60));
                     if (seconds.toString().length > 1) {
-                        params.duration = minuts + ':' + seconds;
+                        const [second] = seconds.toString().split('.');
+                        params.duration = minuts + ':' + second;
                     } else {
                         params.duration = minuts + ':0' + seconds;
                     }
