@@ -28,7 +28,7 @@ function getSongs(req, res) {
         } else {
             find = Song.find({ artist: id }).sort('name')
         }
-        find.then(songs => {
+        find.populate('album').then(songs => {
             if (songs) {
                 res.status(200).send({ songs })
             } else {
