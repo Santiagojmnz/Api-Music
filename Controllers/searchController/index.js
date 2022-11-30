@@ -5,30 +5,36 @@ const Song = require('../../Models/song');
 const search = async(req, res) => {
     const { query } = req.params;
     const regEx = new RegExp(query, 'i');
-    const results = [];
+    var songs = "";
+    var albums = "";
+    var artists = "";
 
     try {
-        const artists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
-        const albums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
-        const songs = await Song.find({ name: regEx });
+        const getArtists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
+        const getAlbums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
+        const getSongs = await Song.find({ name: regEx });
         if (query == 'undefined') {
-            results = [];
+
         } else {
-            if (query) {
-                if (artists.length) {
-                    results.push({ artists: artists });
-                }
-                if (albums.length) {
-                    results.push({ albums: albums })
-                }
-                if (songs.length) {
-                    results.push({ songs: songs })
-                }
 
-
+            if (getArtists.length) {
+                artists = getArtists
             }
+            if (getAlbums.length) {
+                albums = getAlbums
+            }
+            if (getSongs.length) {
+                songs = getSongs
+            }
+
+
+
         }
-        if (results.length) {
+
+        var results = { artists, albums, songs }
+
+
+        if (getArtists.length || getSongs.length || getAlbums.length) {
             return res.status(200).send({ results });
         } else {
             return res.status(404).send({ message: 'Sin resultados', results });
@@ -47,29 +53,30 @@ const search = async(req, res) => {
 const directedSearch = async(req, res) => {
     const { query, collection } = req.params;
     const regEx = new RegExp(query, 'i');
-    const results = [];
+    var results = "";
 
     try {
         if (query == 'undefined') {
-            results = [];
+
         } else {
             if (query) {
                 if (collection == 'artists') {
-                    const artists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
-                    results.push({ Artists: artists });
+                    const getArtists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
+                    results = getArtists;
                 }
                 if (collection == 'albums') {
-                    const albums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
-                    results.push({ Albums: albums })
+                    const getAlbums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
+                    results = getAlbums;
                 }
                 if (collection == 'songs') {
-                    const songs = await Song.find({ name: regEx });
-                    results.push({ Songs: songs })
+                    const getSongs = await Song.find({ name: regEx });
+                    results = getSongs;
                 }
 
 
             }
         }
+
         if (results.length) {
             return res.status(200).send({ results });
         } else {
