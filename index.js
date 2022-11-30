@@ -9,5 +9,3 @@ mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(error => console.log(error))
 
 app.listen(process.env.PORT || 8000)
-
-'use strict'

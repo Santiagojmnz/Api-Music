@@ -16,13 +16,13 @@ const search = async(req, res) => {
         } else {
             if (query) {
                 if (artists.length) {
-                    results.push({ Artists: artists });
+                    results.push({ artists: artists });
                 }
                 if (albums.length) {
-                    results.push({ Albums: albums })
+                    results.push({ albums: albums })
                 }
                 if (songs.length) {
-                    results.push({ Songs: songs })
+                    results.push({ songs: songs })
                 }
 
 
