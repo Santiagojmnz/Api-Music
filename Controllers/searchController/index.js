@@ -12,7 +12,7 @@ const search = async(req, res) => {
     try {
         const getArtists = await Artist.find({ $or: [{ name: regEx }, { description: regEx }] });
         const getAlbums = await Album.find({ $or: [{ title: regEx }, { description: regEx }] });
-        const getSongs = await Song.find({ name: regEx });
+        const getSongs = await Song.find({ name: regEx }).populate('album');
         if (query == 'undefined') {
 
         } else {
@@ -69,7 +69,7 @@ const directedSearch = async(req, res) => {
                     results = getAlbums;
                 }
                 if (collection == 'songs') {
-                    const getSongs = await Song.find({ name: regEx });
+                    const getSongs = await Song.find({ name: regEx }).populate('album');
                     results = getSongs;
                 }
 
